@@ -40,6 +40,19 @@ public class CircleBGTextView extends AppCompatTextView{
      * 是否填充颜色
      */
     private boolean isFillColor;
+
+    private OnViewClickListen mViewClickListen;
+    /**
+     * 回调
+     */
+    public interface OnViewClickListen{
+        void onClick(boolean isFillColor);
+    }
+
+    public void setOnViewClickListen(OnViewClickListen viewClickListen) {
+        mViewClickListen = viewClickListen;
+    }
+
     public CircleBGTextView(Context context) {
         this(context,null);
     }
@@ -118,6 +131,7 @@ public class CircleBGTextView extends AppCompatTextView{
                     }else {
                         setFillColor(true);
                     }
+                    mViewClickListen.onClick(isFillColor);
                 }
                 break;
         }

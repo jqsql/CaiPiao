@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">CaiPiao</string>
+
+    <string name="Myriabit">万位</string>
+    <string name="Kilobit">千位</string>
+    <string name="Hundreds">百位</string>
+    <string name="Decade">十位</string>
+    <string name="Units">个位</string>
 </resources>

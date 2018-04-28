@@ -6,40 +6,40 @@ package com.jqscp.Bean;
  */
 
 public class BaseHttpBean<T>{
-    private int Code;//0表示成功,非0表示失败
-    private T Data;//数据
-    private String Message;//Code不等于0时才存在,失败信息
+    private int code;//0表示成功,非0表示失败
+    private T data;//数据
+    private String msg;//Code不等于0时才存在,失败信息
 
     public int getCode() {
-        return Code;
+        return code;
     }
 
-    public void setCode(int code) {
-        Code = code;
+    public void setCode(int codes) {
+        code = codes;
     }
 
     public T getData() {
-        return Data;
+        return data;
     }
 
-    public void setData(T data) {
-        Data = data;
+    public void setData(T datas) {
+        data = datas;
     }
 
     public String getMessage() {
-        return Message;
+        return msg;
     }
 
     public void setMessage(String message) {
-        Message = message;
+        msg = message;
     }
 
     @Override
     public String toString() {
         return "BaseHttpBean{" +
-                "Code=" + Code +
-                ", Data=" + Data +
-                ", Message='" + Message + '\'' +
+                "Code=" + code +
+                ", Data=" + data +
+                ", Message='" + msg + '\'' +
                 '}';
     }
 }

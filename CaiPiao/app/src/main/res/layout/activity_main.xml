@@ -6,44 +6,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/BackGround"
+    android:orientation="vertical"
     tools:context="com.jqscp.MainActivity">
 
-    <!--<android.support.v4.widget.NestedScrollView
+    <Button
+        android:id="@+id/a1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <GridView
-                android:id="@+id/GridView01"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:numColumns="5"
-                />
-            <GridView
-                android:id="@+id/GridView02"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:numColumns="5"/>
-            <GridView
-                android:id="@+id/GridView03"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:numColumns="5"/>
-            <GridView
-                android:id="@+id/GridView04"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:numColumns="5"/>
-            <GridView
-                android:id="@+id/GridView05"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:numColumns="5"/>
-        </LinearLayout>
+        android:layout_height="wrap_content"
+        android:text="一星"/>
 
-    <!--</android.support.v4.widget.NestedScrollView>-->
+    <Button
+        android:id="@+id/a2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="二星直选"/>
+    <Button
+        android:id="@+id/a3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="二星组选"/>
+
+    <Button
+        android:id="@+id/a4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="三星直选"/>
+
+    <Button
+        android:id="@+id/a5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="三星组三"/>
+
+    <Button
+        android:id="@+id/a6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="三星组六"/>
+
+    <Button
+        android:id="@+id/a7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="五星直选"/>
+
+    <Button
+        android:id="@+id/a8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="五星通选"/>
+
 
 </LinearLayout>
