@@ -34,6 +34,13 @@ public class StatusBarBaseActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       /* //隐藏状态栏
+        Window window = getWindow();
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //定义全屏参数
+        int flag= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        //设置当前窗体为全屏显示
+        window.setFlags(flag, flag);*/
         creatLayout();
         setImmersiveStatusBar(mStatusBarColor);//修改状态栏颜色
     }
