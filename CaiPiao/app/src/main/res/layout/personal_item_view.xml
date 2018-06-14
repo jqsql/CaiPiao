@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/main_me_item_height"
+                android:background="@color/White"
+                android:paddingLeft="@dimen/app_padding_size"
+                android:paddingRight="@dimen/app_padding_size">
+
+    <ImageView
+        android:id="@+id/iv_item_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="12dp"
+        android:scaleType="fitCenter"/>
+
+    <TextView
+        android:id="@+id/tv_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/iv_item_icon"
+        android:textColor="@color/TextBlack"
+        android:textSize="@dimen/text_16dp"/>
+
+
+    <ImageView
+        android:id="@+id/ImageView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/goto_icon"/>
+
+    <TextView
+        android:id="@+id/tv_item_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/ImageView01"
+        android:layout_marginRight="10dp"
+        android:layout_centerVertical="true"
+        android:textColor="@color/TextBlack"
+        android:textSize="@dimen/text_14dp"/>
+
+</RelativeLayout>

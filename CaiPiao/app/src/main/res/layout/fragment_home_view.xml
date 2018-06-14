@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/Main_Home_TopLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/AppColor"
+        android:padding="16dp">
+        <TextView
+            android:id="@+id/Main_Home_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/app_title_size"
+            android:textColor="@color/White"
+            android:text="高频彩"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/main_gift"
+            android:layout_alignBottom="@id/Main_Home_Title"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!-- 轮播图 -->
+            <com.jqscp.View.ImageCycleView
+                android:id="@+id/Main_Home_ImageCycleView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <com.jqscp.View.LooperTextView
+                android:id="@+id/Main_Home_LooperTextView"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+
+            <Button
+                android:id="@+id/GoToPlay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="重庆时时彩"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

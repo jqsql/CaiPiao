@@ -27,10 +27,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center">
+                android:layout_marginTop="20dp">
                 <TextView
                     style="@style/Text_ww_Commmon_Black"
-                    android:padding="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:paddingRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/play_number_bg"
                     android:text="@string/Myriabit"
                     />
                 <com.jqscp.View.MyGrideview
@@ -46,11 +51,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center">
+                android:layout_marginTop="20dp">
                 <TextView
                     style="@style/Text_ww_Commmon_Black"
-                    android:padding="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:paddingRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/play_number_bg"
                     android:text="@string/Kilobit"
                     />
                 <com.jqscp.View.MyGrideview
@@ -65,11 +74,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center">
+                android:layout_marginTop="20dp">
                 <TextView
                     style="@style/Text_ww_Commmon_Black"
-                    android:padding="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:paddingRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/play_number_bg"
                     android:text="@string/Hundreds"
                     />
                 <com.jqscp.View.MyGrideview
@@ -84,11 +97,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center">
+                android:layout_marginTop="20dp">
                 <TextView
                     style="@style/Text_ww_Commmon_Black"
-                    android:padding="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:paddingRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/play_number_bg"
                     android:text="@string/Decade"
                     />
                 <com.jqscp.View.MyGrideview
@@ -103,11 +120,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center">
+                android:layout_marginTop="20dp">
                 <TextView
                     style="@style/Text_ww_Commmon_Black"
-                    android:padding="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:paddingRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/play_number_bg"
                     android:text="@string/Units"
                     />
                 <com.jqscp.View.MyGrideview

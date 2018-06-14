@@ -9,10 +9,16 @@ import android.support.v4.app.Fragment;
  */
 
 public class BaseFragment extends Fragment {
+    protected BaseActivity _this;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (getActivity() instanceof BaseActivity) {
+            _this = (BaseActivity) getActivity();
+        }else {
+            _this=null;
+        }
     }
 
 }

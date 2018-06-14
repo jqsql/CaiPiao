@@ -3,10 +3,29 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--APP状态栏颜色-->
+    <color name="APPStartBarColor">#ffffff</color>
+    <!--APP主背景颜色-->
+    <color name="APPFBackGround">#F0F0F0</color>
+    <!--APP次背景颜色-->
+    <color name="APPSBackGround">#000000</color>
+    <!--APP主题颜色-->
+    <color name="AppColor">#E83737</color>
+
     <color name="Black">#000000</color>
     <color name="White">#ffffff</color>
+    <color name="Green">#2ABC23</color>
+    <!--hint提示文字颜色-->
+    <color name="HintTextColor">#bfbfbf</color>
+    <!--普通文本黑色-->
+    <color name="TextBlack">#808080</color>
+    <!--分割线颜色-->
+    <color name="BorderColor">#bfbfbf</color>
+    <color name="MainTextColor">#D6D6D6</color>
+
+
     <color name="transparent">#00000000</color>
     <color name="Grey">#bfbfbf</color>
-    <color name="BackGround">#faf1f1</color>
     <color name="Red">#fd5555</color>
 </resources>

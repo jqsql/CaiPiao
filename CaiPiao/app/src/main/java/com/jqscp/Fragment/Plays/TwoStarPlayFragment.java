@@ -1,4 +1,4 @@
-package com.jqscp.Fragment;
+package com.jqscp.Fragment.Plays;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,14 +12,11 @@ import android.widget.TextView;
 import com.jqscp.Adapter.StarPlayAdapter;
 import com.jqscp.Bean.RxBusBean;
 import com.jqscp.R;
-import com.jqscp.Util.APPUtils.ALog;
-import com.jqscp.Util.APPUtils.MathUtils;
 import com.jqscp.Util.APPUtils.ToastUtils;
 import com.jqscp.Util.BaseActivityUtils.BaseFragment;
 import com.jqscp.Util.RxJavaUtils.RxBus;
 import com.jqscp.Util.RxJavaUtils.RxBusType;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,20 +26,14 @@ import io.reactivex.functions.Consumer;
  * 五星玩法(五星直选、五星通选)
  */
 
-public class FiveStarPlayFragment extends BaseFragment{
+public class TwoStarPlayFragment extends BaseFragment{
     private View mView;
     private SparseArray<List<Integer>> mList= new SparseArray<>();
     private SparseArray<List<Integer>> mCheckList= new SparseArray<>();
     private GridView m01;
     private GridView m02;
-    private GridView m03;
-    private GridView m04;
-    private GridView m05;
     private StarPlayAdapter mPlayAdapter01;
     private StarPlayAdapter mPlayAdapter02;
-    private StarPlayAdapter mPlayAdapter03;
-    private StarPlayAdapter mPlayAdapter04;
-    private StarPlayAdapter mPlayAdapter05;
 
     private TextView mCountText;
     private int count;//注数
@@ -52,7 +43,7 @@ public class FiveStarPlayFragment extends BaseFragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        mView=inflater.inflate(R.layout.five_star_play_view,null);
+        mView=inflater.inflate(R.layout.two_star_play_view,null);
         initView();
         initData();
         initListen();
@@ -63,9 +54,6 @@ public class FiveStarPlayFragment extends BaseFragment{
         mCountText=mView.findViewById(R.id.Five_Star_View_BottomText);
         m01=mView.findViewById(R.id.GridView01);
         m02=mView.findViewById(R.id.GridView02);
-        m03=mView.findViewById(R.id.GridView03);
-        m04=mView.findViewById(R.id.GridView04);
-        m05=mView.findViewById(R.id.GridView05);
     }
 
     private void initData() {
@@ -75,16 +63,10 @@ public class FiveStarPlayFragment extends BaseFragment{
         mList.put(3,list);
         mList.put(4,list);
         mList.put(5,list);
-        mPlayAdapter01=new StarPlayAdapter(getActivity(),mList,5);
-        mPlayAdapter02=new StarPlayAdapter(getActivity(),mList,4);
-        mPlayAdapter03=new StarPlayAdapter(getActivity(),mList,3);
-        mPlayAdapter04=new StarPlayAdapter(getActivity(),mList,2);
-        mPlayAdapter05=new StarPlayAdapter(getActivity(),mList,1);
+        mPlayAdapter01=new StarPlayAdapter(getActivity(),mList,2);
+        mPlayAdapter02=new StarPlayAdapter(getActivity(),mList,1);
         m01.setAdapter(mPlayAdapter01);
         m02.setAdapter(mPlayAdapter02);
-        m03.setAdapter(mPlayAdapter03);
-        m04.setAdapter(mPlayAdapter04);
-        m05.setAdapter(mPlayAdapter05);
     }
 
     private void initListen() {
@@ -104,30 +86,6 @@ public class FiveStarPlayFragment extends BaseFragment{
                 ToastUtils.showLong(getActivity(),checkedList.toString());
             }
         });
-        mPlayAdapter03.setOnChangeDataListen(new StarPlayAdapter.OnChangeDataListen() {
-            @Override
-            public void onChange(SparseArray<List<Integer>> checkedList) {
-                mCheckList=checkedList;
-                Calculate(1);
-                ToastUtils.showLong(getActivity(),checkedList.toString());
-            }
-        });
-        mPlayAdapter04.setOnChangeDataListen(new StarPlayAdapter.OnChangeDataListen() {
-            @Override
-            public void onChange(SparseArray<List<Integer>> checkedList) {
-                mCheckList=checkedList;
-                Calculate(1);
-                ToastUtils.showLong(getActivity(),checkedList.toString());
-            }
-        });
-        mPlayAdapter05.setOnChangeDataListen(new StarPlayAdapter.OnChangeDataListen() {
-            @Override
-            public void onChange(SparseArray<List<Integer>> checkedList) {
-                mCheckList=checkedList;
-                Calculate(1);
-                ToastUtils.showLong(getActivity(),checkedList.toString());
-            }
-        });
 
 
         RxBus.getDefault().doSubscribeMain(getActivity(), RxBusBean.class, new Consumer<RxBusBean>() {
@@ -137,10 +95,7 @@ public class FiveStarPlayFragment extends BaseFragment{
                     mCheckList= (SparseArray<List<Integer>>) rxBusBean.getObject();
                     mPlayAdapter01.setCheckedList(mCheckList);
                     mPlayAdapter02.setCheckedList(mCheckList);
-                    mPlayAdapter03.setCheckedList(mCheckList);
-                    mPlayAdapter04.setCheckedList(mCheckList);
-                    mPlayAdapter05.setCheckedList(mCheckList);
-                    mCountText.setText("共 "+1+" 注, "+2+" 元");
+                    Calculate(1);
                 }
             }
         });

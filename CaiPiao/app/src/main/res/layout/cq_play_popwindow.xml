@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/app_padding_size"
+              android:layout_marginRight="@dimen/app_padding_size"
+              android:background="@color/APPFBackGround"
+              android:padding="10dp"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/CQPlay_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/layout_white_border_1"
+            android:gravity="center"
+            android:padding="6dp"
+            android:layout_marginRight="10dp"
+            android:text="一星直选"
+            android:textColor="@color/TextBlack"
+            android:textSize="@dimen/text_14dp"/>
+
+        <TextView
+            android:id="@+id/CQPlay_21"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/layout_white_border_1"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:text="二星直选"
+            android:textColor="@color/TextBlack"
+            android:textSize="@dimen/text_14dp"/>
+
+        <TextView
+            android:id="@+id/CQPlay_22"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/layout_white_border_1"
+            android:gravity="center"
+            android:text="二星组选"
+            android:textColor="@color/TextBlack"
+            android:textSize="@dimen/text_14dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/CQPlay_31"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/layout_white_border_1"
+            android:gravity="center"
+            android:padding="6dp"
+            android:layout_marginRight="10dp"
+            android:text="三星直选"
+            android:textColor="@color/TextBlack"
+            android:textSize="@dimen/text_14dp"/>
+
+        <TextView
+            android:id="@+id/CQPlay_32"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/layout_white_border_1"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:text="三星组三单式"
+            android:textColor="@color/TextBlack"
+            android:textSize="@dimen/text_14dp"/>
+
+        <TextView
+            android:id="@+id/CQPlay_33"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/layout_white_border_1"
+            android:gravity="center"
+            android:text="三星组三复式"
+            android:textColor="@color/TextBlack"
+            android:textSize="@dimen/text_14dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/CQPlay_34"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/layout_white_border_1"
+            android:gravity="center"
+            android:padding="6dp"
+            android:layout_marginRight="10dp"
+            android:text="三星组六"
+            android:textColor="@color/TextBlack"
+            android:textSize="@dimen/text_14dp"/>
+
+        <TextView
+            android:id="@+id/CQPlay_51"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/layout_white_border_1"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:text="五星直选"
+            android:textColor="@color/TextBlack"
+            android:textSize="@dimen/text_14dp"/>
+
+        <TextView
+            android:id="@+id/CQPlay_52"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/layout_white_border_1"
+            android:gravity="center"
+            android:text="五星通选"
+            android:textColor="@color/TextBlack"
+            android:textSize="@dimen/text_14dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/CQPlay_big"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/layout_white_border_1"
+            android:gravity="center"
+            android:padding="6dp"
+            android:layout_marginRight="10dp"
+            android:text="大小单双"
+            android:textColor="@color/TextBlack"
+            android:textSize="@dimen/text_14dp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+</LinearLayout>

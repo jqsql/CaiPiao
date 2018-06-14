@@ -108,7 +108,7 @@ public class Sharedpreferences_Utils {
      * 将数据从偏好设置中取出int
      */
     public boolean getBoolean(String key){
-        boolean result=mPreferences.getBoolean(key,false);//默认返回0
+        boolean result=mPreferences.getBoolean(key,false);//默认返回false
         return result;
     }
     /**

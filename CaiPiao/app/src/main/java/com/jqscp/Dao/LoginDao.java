@@ -5,6 +5,8 @@ import android.util.Base64;
 import com.google.gson.Gson;
 import com.jqscp.Bean.BaseHttpBean;
 import com.jqscp.Bean.CurrentIssueBean;
+import com.jqscp.Bean.RegisterBean;
+import com.jqscp.Server.LoginServer;
 import com.jqscp.Server.UserServer;
 import com.jqscp.Util.RxHttp.RxHttp;
 import com.jqscp.Util.RxHttp.RxRetrofit;
@@ -26,14 +28,14 @@ import okhttp3.RequestBody;
 public class LoginDao {
     private static Gson mGson = new Gson();
     /**
-     * 获取当前期号
+     * 注册
      * @param resultClick
      */
-    public void GetCurrentIssue(final OnResultClick<CurrentIssueBean> resultClick){
-        UserServer mUserServer = RxRetrofit.getInstance().create(UserServer.class);
-        RxHttp.sendRequest(mUserServer.GetCurrentIssue(), new Consumer<BaseHttpBean<CurrentIssueBean>>() {
+    public static void Register(String mobile,String pwd,final OnResultClick<RegisterBean> resultClick){
+        LoginServer mLoginServer = RxRetrofit.getInstance().create(LoginServer.class);
+        RxHttp.sendRequest(mLoginServer.Register(mobile,pwd), new Consumer<BaseHttpBean<RegisterBean>>() {
             @Override
-            public void accept(BaseHttpBean<CurrentIssueBean> currentIssueBeanBaseHttpBean) throws Exception {
+            public void accept(BaseHttpBean<RegisterBean> currentIssueBeanBaseHttpBean) throws Exception {
                 resultClick.success(currentIssueBeanBaseHttpBean);
             }
         }, new Consumer<Throwable>() {
@@ -44,16 +46,15 @@ public class LoginDao {
         });
     }
     /**
-     * 上传
+     * 登陆
      * @param resultClick
      */
-    public void putCurrentIssue(String bill, int multiple
-            , int ptype, int flag, String sbill, final OnNoResultClick resultClick){
-        UserServer mUserServer = RxRetrofit.getInstance().create(UserServer.class);
-        RxHttp.sendNoRequest(mUserServer.putCurrentIssue(bill,multiple,ptype,flag,sbill), new Consumer<BaseHttpBean>() {
+    public static void Login(String uisername,String pwd,final OnResultClick<RegisterBean> resultClick){
+        LoginServer mLoginServer = RxRetrofit.getInstance().create(LoginServer.class);
+        RxHttp.sendRequest(mLoginServer.Login(uisername,pwd), new Consumer<BaseHttpBean<RegisterBean>>() {
             @Override
-            public void accept(BaseHttpBean currentIssueBeanBaseHttpBean) throws Exception {
-                resultClick.success();
+            public void accept(BaseHttpBean<RegisterBean> currentIssueBeanBaseHttpBean) throws Exception {
+                resultClick.success(currentIssueBeanBaseHttpBean);
             }
         }, new Consumer<Throwable>() {
             @Override
@@ -62,4 +63,5 @@ public class LoginDao {
             }
         });
     }
+
 }

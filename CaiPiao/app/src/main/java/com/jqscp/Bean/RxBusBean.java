@@ -20,7 +20,9 @@ public class RxBusBean implements Parcelable {
 
     public RxBusBean() {
     }
-
+    public RxBusBean(RxBusType type) {
+        this.type = type;
+    }
     public RxBusBean(RxBusType type, String content) {
         this.type = type;
         this.content = content;

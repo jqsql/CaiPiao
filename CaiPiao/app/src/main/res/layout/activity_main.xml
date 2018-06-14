@@ -1,60 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/BackGround"
     android:orientation="vertical"
-    tools:context="com.jqscp.MainActivity">
+    tools:context="com.jqscp.Activity.MainActivity">
 
-    <Button
-        android:id="@+id/a1"
+    <RadioGroup
+        android:id="@+id/Main_RadioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="一星"/>
-
-    <Button
-        android:id="@+id/a2"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:background="@color/White">
+        <RadioButton
+            android:id="@+id/Main_Home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:button="@null"
+            android:padding="6dp"
+            android:checked="true"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/main_radiobtn_icon_home"
+            android:textColor="@color/main_radiobtn_check"
+            android:textSize="@dimen/app_main_size"
+            android:text="首页"/>
+        <RadioButton
+            android:id="@+id/Main_Lottery"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:button="@null"
+            android:padding="6dp"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/main_radiobtn_icon_lottery"
+            android:textColor="@color/main_radiobtn_check"
+            android:textSize="@dimen/app_main_size"
+            android:text="开奖"/>
+        <RadioButton
+            android:id="@+id/Main_Find"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:button="@null"
+            android:padding="6dp"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/main_radiobtn_icon_find"
+            android:textColor="@color/main_radiobtn_check"
+            android:textSize="@dimen/app_main_size"
+            android:text="发现"/>
+        <RadioButton
+            android:id="@+id/Main_My"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:button="@null"
+            android:padding="6dp"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/main_radiobtn_icon_my"
+            android:textColor="@color/main_radiobtn_check"
+            android:textSize="@dimen/app_main_size"
+            android:text="我的"/>
+    </RadioGroup>
+    <com.jqscp.View.NoScrollViewPager
+        android:id="@+id/Main_ViewPager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="二星直选"/>
-    <Button
-        android:id="@+id/a3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="二星组选"/>
+        android:layout_height="match_parent"
+        android:layout_above="@id/Main_RadioGroup"/>
 
-    <Button
-        android:id="@+id/a4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="三星直选"/>
-
-    <Button
-        android:id="@+id/a5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="三星组三"/>
-
-    <Button
-        android:id="@+id/a6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="三星组六"/>
-
-    <Button
-        android:id="@+id/a7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="五星直选"/>
-
-    <Button
-        android:id="@+id/a8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="五星通选"/>
-
-
-</LinearLayout>
+</RelativeLayout>

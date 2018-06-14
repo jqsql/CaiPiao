@@ -6,4 +6,13 @@
         <attr name="isFillColor" format="boolean"/>
         <attr name="borderSize" format="dimension"/>
     </declare-styleable>
+    <!--个人中心Item-->
+    <declare-styleable name="PersonalItemView">
+        <attr name="itemName" format="string" />
+        <attr name="itemValue" format="string" />
+        <attr name="itemSrc" format="reference"/>
+        <attr name="itemHaveIcon" format="boolean"/>
+        <attr name="itemHaveGoto" format="boolean"/>
+        <attr name="itemValueColor" format="color"/>
+    </declare-styleable>
 </resources>

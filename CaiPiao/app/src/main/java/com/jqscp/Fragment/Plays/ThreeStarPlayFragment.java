@@ -1,4 +1,4 @@
-package com.jqscp.Fragment;
+package com.jqscp.Fragment.Plays;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

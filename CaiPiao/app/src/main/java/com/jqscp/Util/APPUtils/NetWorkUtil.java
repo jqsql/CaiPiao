@@ -36,7 +36,6 @@ public class NetWorkUtil
 
 	/**
 	 * 网络是否可用
-	 * 
 	 * @param context
 	 * @return
 	 */
@@ -60,7 +59,6 @@ public class NetWorkUtil
 
 	/**
 	 * 判断是否有网络连接
-	 * 
 	 * @param context
 	 * @return
 	 */
@@ -82,7 +80,6 @@ public class NetWorkUtil
 
 	/**
 	 * 判断WIFI网络是否可用
-	 * 
 	 * @param context
 	 * @return
 	 */
@@ -104,7 +101,6 @@ public class NetWorkUtil
 
 	/**
 	 * 判断MOBILE网络是否可用
-	 * 
 	 * @param context
 	 * @return
 	 */
@@ -126,7 +122,6 @@ public class NetWorkUtil
 
 	/**
 	 * 获取当前网络连接的类型信息
-	 * 
 	 * @param context
 	 * @return
 	 */
@@ -147,13 +142,8 @@ public class NetWorkUtil
 	}
 
 	/**
-	 * 
-	 * @author 白猫
-	 * 
-	 *         获取当前的网络状态 -1：没有网络 1：WIFI网络2：wap 网络3：net网络
-	 * 
+	 * 获取当前的网络状态 -1：没有网络 1：WIFI网络2：wap 网络3：net网络
 	 * @param context
-	 * 
 	 * @return
 	 */
 	public static netType getAPNType(Context context)

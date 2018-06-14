@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:id="@+id/Main_Me_TopLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_me_topLayout_height"
+        android:background="@drawable/view_bg_bitmap"
+        android:padding="@dimen/app_padding_size">
+
+        <TextView
+            android:id="@+id/Main_Me_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的"
+            android:textColor="@color/White"
+            android:textSize="@dimen/app_title_size"/>
+
+        <ImageView
+            android:id="@+id/Main_Me_Service"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignBottom="@id/Main_Me_Title"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/service"/>
+
+        <ImageView
+            android:id="@+id/Main_Me_News"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignBottom="@id/Main_Me_Title"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@id/Main_Me_Service"
+            android:src="@drawable/news"/>
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/Main_Me_Header"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/Main_Me_Title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"/>
+
+        <TextView
+            android:id="@+id/Main_Me_NickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Main_Me_Header"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/White"
+            android:textSize="14dp"/>
+    </RelativeLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/Main_Me_TopLayout"
+        android:layout_marginBottom="-40dp"
+        android:layout_marginLeft="@dimen/app_padding_size"
+        android:layout_marginRight="@dimen/app_padding_size"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:cardBackgroundColor="@color/White"
+        app:cardCornerRadius="4dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:padding="10dp"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/Main_Me_HaveAccountHint"
+                style="@style/Text_WW_Black"
+                android:text="账户余额(元)"/>
+            <TextView
+                android:id="@+id/Main_Me_HaveAccount"
+                style="@style/Text_WW_AppColor"
+                android:layout_width="60dp"
+                android:layout_below="@id/Main_Me_HaveAccountHint"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/Main_Me_CanUseMoneyHint"
+                style="@style/Text_WW_Black"
+                android:layout_toRightOf="@id/Main_Me_HaveAccountHint"
+                android:layout_marginLeft="15dp"
+                android:text="可用余额(元)"/>
+            <TextView
+                android:id="@+id/Main_Me_CanUseMoney"
+                style="@style/Text_WW_AppColor"
+                android:layout_width="60dp"
+                android:layout_below="@id/Main_Me_CanUseMoneyHint"
+                android:layout_alignLeft="@id/Main_Me_CanUseMoneyHint"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="0"/>
+            <Button
+                android:id="@+id/Main_Me_OutMoney"
+                android:layout_width="@dimen/main_me_btn_width"
+                android:layout_height="@dimen/main_me_btn_height"
+                style="?attr/borderlessButtonStyle"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/shape_green_4"
+                android:textColor="@color/White"
+                android:textSize="@dimen/text_14dp"
+                android:text="提款"/>
+            <Button
+                android:id="@+id/Main_Me_InMoney"
+                android:layout_width="@dimen/main_me_btn_width"
+                android:layout_height="@dimen/main_me_btn_height"
+                style="?attr/borderlessButtonStyle"
+                android:layout_toLeftOf="@id/Main_Me_OutMoney"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/shape_app_4"
+                android:textColor="@color/White"
+                android:textSize="@dimen/text_14dp"
+                android:text="充值"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+
+    <com.jqscp.View.PersonalItemView
+        android:id="@+id/Main_Me_Record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Main_Me_TopLayout"
+        android:layout_marginTop="50dp"
+        app:itemName="投注记录"
+        app:itemSrc="@drawable/record"/>
+
+    <com.jqscp.View.PersonalItemView
+        android:id="@+id/Main_Me_Account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Main_Me_Record"
+        app:itemName="账户明细"
+        app:itemSrc="@drawable/account"/>
+
+    <com.jqscp.View.PersonalItemView
+        android:id="@+id/Main_Me_Safety"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Main_Me_Account"
+        android:layout_marginTop="20dp"
+        app:itemName="安全中心"
+        app:itemSrc="@drawable/safety"/>
+
+    <com.jqscp.View.PersonalItemView
+        android:id="@+id/Main_Me_Setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Main_Me_Safety"
+        app:itemName="设置"
+        app:itemSrc="@drawable/setting"/>
+</RelativeLayout>

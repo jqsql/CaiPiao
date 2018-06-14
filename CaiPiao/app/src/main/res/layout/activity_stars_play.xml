@@ -6,9 +6,89 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.jqscp.Activity.StarsPlayActivity">
-    <include
-        layout="@layout/app_toolbar"/>
+    tools:context="com.jqscp.Activity.Plays.StarsPlayActivity">
+
+    <include layout="@layout/app_topbar_view"/>
+   <!-- <RelativeLayout
+        android:id="@+id/CQ_Play_TopLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_toolbar_height"
+        android:background="@color/APPStartBarColor"
+        android:paddingLeft="@dimen/app_padding_size"
+        android:paddingRight="@dimen/app_padding_size">
+
+        <ImageView
+            android:id="@+id/CQ_Play_Return"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/go_back"/>
+
+        <TextView
+            android:id="@+id/CQ_Play_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:ellipsize="end"
+            android:maxEms="9"
+            android:textColor="@color/White"
+            android:textSize="@dimen/app_title_size"/>
+    </RelativeLayout>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="10dp">
+            <TextView
+                android:id="@+id/Stars_Play_ThisIssue"
+                style="@style/Text_WW_Black"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:text="距000期投注截止"/>
+            <TextView
+                android:id="@+id/Stars_Play_CountDown"
+                style="@style/Text_WW_AppColor"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="00:00"/>
+        </LinearLayout>
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/BorderColor"
+            android:layout_margin="5dp"/>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp">
+            <TextView
+                android:id="@+id/Stars_Play_HintText"
+                style="@style/Text_WW_Black"
+                android:layout_centerHorizontal="true"
+                android:text="000期开奖结果"/>
+            <TextView
+                style="@style/Text_WW_AppColor"
+                android:layout_below="@id/Stars_Play_HintText"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:text="0"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/app_padding_size"
+                android:src="@drawable/goto_icon"/>
+        </RelativeLayout>
+    </LinearLayout>
+
     <FrameLayout
         android:id="@+id/Stars_Play_FrameLayout"
         android:layout_width="match_parent"

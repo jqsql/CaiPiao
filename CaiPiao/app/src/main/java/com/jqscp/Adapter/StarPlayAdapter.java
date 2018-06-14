@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.jqscp.Fragment.OneStarPlayFragment;
-import com.jqscp.MainActivity;
 import com.jqscp.R;
 import com.jqscp.View.CircleBGTextView;
 

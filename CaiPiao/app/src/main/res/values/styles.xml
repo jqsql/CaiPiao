@@ -6,13 +6,45 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/APPFBackGround</item>
     </style>
-    
+
+    <!--启动页主题-->
+    <style name="BootPageTheme" parent="AppTheme">
+        <item name="android:background">@drawable/boot_page</item>
+    </style>
     <style name="Text_ww_Commmon_Black">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">14dp</item>
-        <item name="android:textColor">@color/Black</item>
+        <item name="android:textSize">@dimen/text_16dp</item>
+        <item name="android:textColor">@color/White</item>
+    </style>
+    <!--缩放动画-->
+    <style name="Scale_Animal_PopupWindow">
+        <!-- 指定显示的动画xml -->
+        <item name="android:windowEnterAnimation">@anim/scale_anim_big</item>
+        <!-- 指定消失的动画xml -->
+        <item name="android:windowExitAnimation">@anim/scale_anim_small</item>
+    </style>
+    <!--PopWindow弹出动画效果-->
+    <style name="PopupAnimation">
+        <!-- 指定显示的动画xml -->
+        <item name="android:windowEnterAnimation">@anim/popwindow_show</item>
+        <!-- 指定消失的动画xml -->
+        <item name="android:windowExitAnimation">@anim/popwindow_hidden</item>
     </style>
 
+
+    <style name="Text_WW_Black">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_12dp</item>
+        <item name="android:textColor">@color/TextBlack</item>
+    </style>
+    <style name="Text_WW_AppColor">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_12dp</item>
+        <item name="android:textColor">@color/AppColor</item>
+    </style>
 </resources>

@@ -1,5 +1,6 @@
 package com.jqscp.Util.AppUpgradeUtils;
 
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,8 +17,13 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.jqscp.Bean.SystemVersion;
+import com.jqscp.Util.APPUtils.ToastUtils;
+import com.jqscp.Util.PermissionUtils.RxPermissionUtil;
 
 import java.io.File;
+import java.io.IOException;
+
+import io.reactivex.functions.Consumer;
 
 /**
  * 版本更新下载工具类
@@ -25,6 +31,7 @@ import java.io.File;
 public class AppUpgradeManager {
     private volatile static AppUpgradeManager sAppUpgradeManager;
     private DownloadManager downloader;
+    private Activity mActivity;
     private Context appContext;
     private NotificationClickReceiver mNotificationClickReceiver;
     private DownloadReceiver mDownloaderReceiver;
@@ -34,18 +41,19 @@ public class AppUpgradeManager {
     //服务器返回的版本信息
     private SystemVersion latestVersion;
 
-    public AppUpgradeManager(Context context, SystemVersion version) {
-        appContext = context.getApplicationContext();
+    public AppUpgradeManager(Activity activity, SystemVersion version) {
+        mActivity=activity;
+        appContext = activity.getApplicationContext();
         latestVersion = version;
         mDownloaderReceiver = new DownloadReceiver();
         mNotificationClickReceiver = new NotificationClickReceiver();
     }
 
-    public static AppUpgradeManager getInstance(Context context, SystemVersion version) {
+    public static AppUpgradeManager getInstance(Activity activity, SystemVersion version) {
         if (sAppUpgradeManager == null) {
             synchronized (AppUpgradeManager.class) {
                 if (sAppUpgradeManager == null) {
-                    sAppUpgradeManager = new AppUpgradeManager(context, version);
+                    sAppUpgradeManager = new AppUpgradeManager(activity, version);
                 }
             }
         }
@@ -121,8 +129,8 @@ public class AppUpgradeManager {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             task.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, apkName);
         }
-// 自定义文件路径
-//task.setDestinationUri()
+        // 自定义文件路径
+        //task.setDestinationUri()
         downloadTaskId = downloader.enqueue(task);
         //TDevice SharedPreferences封装类
         AppUpgradePersistentHelper.saveDownloadTaskId(appContext, downloadTaskId);
@@ -131,7 +139,21 @@ public class AppUpgradeManager {
         appContext.registerReceiver(mNotificationClickReceiver, new IntentFilter(DownloadManager.ACTION_NOTIFICATION_CLICKED));
 
     }
-
+    /**
+     * 提升读写权限
+     * @param filePath 文件路径
+     * @return
+     * @throws IOException
+     */
+    public static void setPermission(String filePath)  {
+        String command = "chmod " + "777" + " " + filePath;
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            runtime.exec(command);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void installApk() {
         if (TextUtils.isEmpty(downloadApkPath)) {
             Toast.makeText(appContext, "APP安装文件不存在或已损坏", Toast.LENGTH_LONG).show();
@@ -144,7 +166,7 @@ public class AppUpgradeManager {
         }
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//7.0以上
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             Uri contentUri = FileProvider.getUriForFile(appContext, "com.myview.provider", apkFile);
             intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
@@ -179,7 +201,24 @@ public class AppUpgradeManager {
 
             int columnIndex = cur.getColumnIndex(DownloadManager.COLUMN_STATUS);
             if (DownloadManager.STATUS_SUCCESSFUL == cur.getInt(columnIndex)) {
-                installApk();
+                setPermission(downloadApkPath);
+                // 兼容Android 8.0
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    RxPermissionUtil.getInstance(mActivity).getInstallApkPermiss(new Consumer<Boolean>() {
+                        @Override
+                        public void accept(Boolean aBoolean) throws Exception {
+                            if(aBoolean){
+                                //有权限
+                                installApk();
+                            }else {
+                                ToastUtils.showShort(mActivity,"请手动开启安装权限!");
+                            }
+                        }
+                    });
+
+                } else {
+                    installApk();
+                }
             } else {
                 Toast.makeText(appContext, "下载App最新版本失败!", Toast.LENGTH_LONG).show();
             }

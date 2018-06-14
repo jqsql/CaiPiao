@@ -20,7 +20,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * 沉浸式通用activity
+ * 沉浸式通用activity(暂时不用)
  */
 
 public class StatusBarBaseActivity extends BaseActivity {
@@ -61,11 +61,11 @@ public class StatusBarBaseActivity extends BaseActivity {
      *
      * @param fontIconDark
      */
-    protected void setFontIconDark(boolean fontIconDark, int statusBarColor) {
+    protected boolean setFontIconDark(boolean fontIconDark, int statusBarColor) {
         this.fontIconDark = fontIconDark;
         if (statusBarColor != 0)
             this.mStatusBarColor = statusBarColor;
-        setImmersiveStatusBar(mStatusBarColor);
+        return setImmersiveStatusBar(mStatusBarColor);
     }
 
     /**
@@ -73,9 +73,9 @@ public class StatusBarBaseActivity extends BaseActivity {
      *
      * @param fullScreen
      */
-    protected void setFullScreen(boolean fullScreen) {
+    protected boolean setFullScreen(boolean fullScreen) {
         isFullScreen = fullScreen;
-        setImmersiveStatusBar(mStatusBarColor);
+        return setImmersiveStatusBar(mStatusBarColor);
     }
 
 
@@ -101,7 +101,7 @@ public class StatusBarBaseActivity extends BaseActivity {
     /**
      * 设置沉浸式状态栏 * * @param fontIconDark 状态栏字体和图标颜色是否为深色
      */
-    protected void setImmersiveStatusBar(int statusBarColor) {
+    protected boolean setImmersiveStatusBar(int statusBarColor) {
         if (setTranslucentStatus()) {
             if (fontIconDark) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M || OSUtils.isMiui() || OSUtils.isFlyme()) {
@@ -116,6 +116,9 @@ public class StatusBarBaseActivity extends BaseActivity {
                 statusBarColor = mStatusBarColor;
             }
             setStatusBarPlaceColor(statusBarColor);
+            return true;
+        }else {
+            return false;
         }
     }
 

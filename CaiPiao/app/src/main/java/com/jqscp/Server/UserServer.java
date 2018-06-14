@@ -9,6 +9,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HEAD;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
@@ -18,12 +19,9 @@ import retrofit2.http.Url;
  */
 
 public interface UserServer {
-    //获取用户信息接口
-    @GET("api/cqssc/v1/show")
-    Flowable<BaseHttpBean<CurrentIssueBean>> GetCurrentIssue();
-    //获取用户信息接口
-    @FormUrlEncoded
-    @POST("api/cqssc/v1/makebill")
-    Flowable<BaseHttpBean> putCurrentIssue(@Field("bill") String bill, @Field("multiple") int multiple
-            , @Field("ptype") int ptype, @Field("flag") int flag,@Field("sbill") String sbill);
+
+    //获取用户余额/验证余额是否充足
+    @GET("api/appuser/v1/checkmoney")
+    Flowable<BaseHttpBean> GetOrCheckMoney(@Query("money") double money);
+
 }

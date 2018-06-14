@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.jqscp.Activity.MySelf.SettingActivity">
+    <include layout="@layout/app_topbar_view"/>
+
+    <com.jqscp.View.PersonalItemView
+        android:id="@+id/Main_Setting_Clear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemName="清除缓存"
+        app:itemHaveIcon="false"
+        app:itemValueColor="@color/AppColor"
+        app:itemValue="0MB"/>
+    <com.jqscp.View.PersonalItemView
+        android:id="@+id/Main_Setting_Share"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemName="分享给好友"
+        app:itemHaveIcon="false"/>
+    <com.jqscp.View.PersonalItemView
+        android:id="@+id/Main_Setting_Inspect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemName="检查版本更新"
+        app:itemHaveIcon="false"
+        app:itemValue="当前版本1.0"/>
+    <com.jqscp.View.PersonalItemView
+        android:id="@+id/Main_Setting_AboutUs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemName="关于我们"
+        app:itemHaveIcon="false"/>
+    <com.jqscp.View.PersonalItemView
+        android:id="@+id/Main_Setting_Help"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemName="帮助中心"
+        app:itemHaveIcon="false"/>
+
+    <Button
+        android:id="@+id/Main_Setting_Quit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_btn_height"
+        style="?attr/borderlessButtonStyle"
+        android:background="@drawable/shape_app_4"
+        android:layout_marginLeft="@dimen/app_padding_size"
+        android:layout_marginRight="@dimen/app_padding_size"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="30dp"
+        android:textColor="@color/White"
+        android:textSize="@dimen/text_16dp"
+        android:text="退  出"/>
+</LinearLayout>
