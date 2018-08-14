@@ -139,11 +139,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         });
     }
 
-    @Override
-    protected void setStatusBarColor() {
-        setFontIconDark(false,R.color.AppColor);
-    }
-
     /**
      * 注册
      */

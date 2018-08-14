@@ -157,7 +157,7 @@ public class BaseActivity extends AppCompatActivity {
 
     /**----------------------------沉浸式分界线---------------------------*/
     protected void setStatusBarColor(){
-        setFontIconDark(true, mStatusBarColor);//修改状态栏颜色
+        setFontIconDark(false, mStatusBarColor);//修改状态栏颜色
     }
 
 

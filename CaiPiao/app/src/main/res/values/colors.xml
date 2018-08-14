@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <!--APP状态栏颜色-->
-    <color name="APPStartBarColor">#ffffff</color>
+    <color name="APPStartBarColor">#E83737</color>
     <!--APP主背景颜色-->
     <color name="APPFBackGround">#F0F0F0</color>
     <!--APP次背景颜色-->

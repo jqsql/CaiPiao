@@ -80,10 +80,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         });
     }
 
-    @Override
-    protected void setStatusBarColor() {
-        setFontIconDark(false,R.color.AppColor);
-    }
 
     /**
      * 跳转登陆

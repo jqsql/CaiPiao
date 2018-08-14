@@ -3,43 +3,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/APPStartBarColor"
-                android:paddingLeft="@dimen/app_padding_size"
-                android:paddingRight="@dimen/app_padding_size">
+                android:padding="@dimen/app_padding_size">
 
     <ImageView
         android:id="@+id/App_TopBar_Return"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingRight="20dp"
+        android:layout_centerVertical="true"
         android:src="@drawable/go_back"/>
 
     <TextView
         android:id="@+id/App_TopBar_Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/App_TopBar_Return"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_centerInParent="true"
         android:maxEms="9"
         android:ellipsize="end"
         android:textSize="@dimen/app_title_size"
-        android:textColor="@color/Black"/>
+        android:textColor="@color/White"/>
     <TextView
         android:id="@+id/App_TopBar_HintText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/App_TopBar_Title"
+        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:textSize="@dimen/app_content_size"
-        android:textColor="@color/TextBlack"
+        android:textColor="@color/White"
         android:visibility="gone"/>
     <ImageView
         android:id="@+id/App_TopBar_HintIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingLeft="20dp"
+        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:visibility="gone"/>
 </RelativeLayout>
