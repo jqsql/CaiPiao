@@ -12,13 +12,14 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
+
 import com.jqscp.R;
 
 /**
  * 圆形背景的自定义view
  */
 
-public class CircleBGTextView extends AppCompatTextView{
+public class CircleBGTextView extends AppCompatTextView {
     private Context mContext;
     /**
      * 画笔
@@ -42,10 +43,11 @@ public class CircleBGTextView extends AppCompatTextView{
     private boolean isFillColor;
 
     private OnViewClickListen mViewClickListen;
+
     /**
      * 回调
      */
-    public interface OnViewClickListen{
+    public interface OnViewClickListen {
         void onClick(boolean isFillColor);
     }
 
@@ -54,16 +56,16 @@ public class CircleBGTextView extends AppCompatTextView{
     }
 
     public CircleBGTextView(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public CircleBGTextView(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public CircleBGTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.mContext=context;
+        this.mContext = context;
         this.setGravity(Gravity.CENTER);
         mPaint = new Paint();
         //获取自定义属性值
@@ -83,7 +85,7 @@ public class CircleBGTextView extends AppCompatTextView{
             this.setTextColor(Color.WHITE);
             mPaint.setColor(mFillColor);//画笔颜色
             mPaint.setStyle(Paint.Style.FILL);//实心
-        }else {
+        } else {
             this.setTextColor(Color.RED);
             mPaint.setColor(mBorderColor);//画笔颜色
             mPaint.setStyle(Paint.Style.STROKE);//空心
@@ -93,14 +95,14 @@ public class CircleBGTextView extends AppCompatTextView{
         RectF rectF = new RectF();
         //设置半径,比较长宽,取最大值
         int radius = getWidth() > getHeight() ? getWidth() : getHeight();
-        ViewGroup.LayoutParams params= CircleBGTextView.this.getLayoutParams();
-        params.width=radius;
-        params.height=radius;
+        ViewGroup.LayoutParams params = CircleBGTextView.this.getLayoutParams();
+        params.width = radius;
+        params.height = radius;
         CircleBGTextView.this.setLayoutParams(params);
         //设置Padding 不一致,绘制出的是椭圆;一致的是圆形
-        rectF.set(0,0,radius,radius);
+        rectF.set(0, 0, radius, radius);
         //绘制圆弧
-        canvas.drawArc(rectF,0,360,false,mPaint);
+        canvas.drawArc(rectF, 0, 360, false, mPaint);
         super.onDraw(canvas);
     }
 
@@ -116,26 +118,29 @@ public class CircleBGTextView extends AppCompatTextView{
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int x = (int) event.getX();
-        int y = (int) event.getY();
-        int action = event.getAction();
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                break;
-            case MotionEvent.ACTION_MOVE:
-                break;
-            case MotionEvent.ACTION_UP:
-                if (x + getLeft() < getRight() && y + getTop() < getBottom()) {
-                    if(isFillColor){
-                        setFillColor(false);
-                    }else {
-                        setFillColor(true);
+        if (mViewClickListen != null) {
+            int x = (int) event.getX();
+            int y = (int) event.getY();
+            int action = event.getAction();
+            switch (action) {
+                case MotionEvent.ACTION_DOWN:
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if (x + getLeft() < getRight() && y + getTop() < getBottom()) {
+                        if (isFillColor) {
+                            setFillColor(false);
+                        } else {
+                            setFillColor(true);
+                        }
+                        mViewClickListen.onClick(isFillColor);
                     }
-                    mViewClickListen.onClick(isFillColor);
-                }
                 break;
+            }
+            return true;
         }
-        return true;
+        return super.onTouchEvent(event);
     }
 
 

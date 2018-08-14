@@ -8,6 +8,7 @@ import com.jqscp.Bean.CurrentIssueBean;
 import com.jqscp.Bean.RegisterBean;
 import com.jqscp.Server.LoginServer;
 import com.jqscp.Server.UserServer;
+import com.jqscp.Util.APPUtils.ALog;
 import com.jqscp.Util.RxHttp.RxHttp;
 import com.jqscp.Util.RxHttp.RxRetrofit;
 
@@ -49,9 +50,9 @@ public class LoginDao {
      * 登陆
      * @param resultClick
      */
-    public static void Login(String uisername,String pwd,final OnResultClick<RegisterBean> resultClick){
+    public static void Login(String username,String pwd,final OnResultClick<RegisterBean> resultClick){
         LoginServer mLoginServer = RxRetrofit.getInstance().create(LoginServer.class);
-        RxHttp.sendRequest(mLoginServer.Login(uisername,pwd), new Consumer<BaseHttpBean<RegisterBean>>() {
+        RxHttp.sendRequest(mLoginServer.Login(username,pwd), new Consumer<BaseHttpBean<RegisterBean>>() {
             @Override
             public void accept(BaseHttpBean<RegisterBean> currentIssueBeanBaseHttpBean) throws Exception {
                 resultClick.success(currentIssueBeanBaseHttpBean);
@@ -63,5 +64,27 @@ public class LoginDao {
             }
         });
     }
+    /**
+     * 忘记密码
+     * @param account
+     * @param pwd
+     * @param code
+     * @param resultClick
+     */
+    public static void ForgetPwd(String account,String pwd,String code,final OnResultClick resultClick){
+        LoginServer mLoginServer = RxRetrofit.getInstance().create(LoginServer.class);
+        RxHttp.sendNoRequest(mLoginServer.ForgetPwd(account,pwd,code), new Consumer<BaseHttpBean>() {
+            @Override
+            public void accept(BaseHttpBean bean) throws Exception {
+                resultClick.success(bean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                resultClick.fail(throwable);
+            }
+        });
+    }
+
 
 }

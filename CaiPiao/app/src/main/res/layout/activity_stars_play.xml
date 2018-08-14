@@ -1,84 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Stars_Play_ParentsLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.jqscp.Activity.Plays.StarsPlayActivity">
 
-    <include layout="@layout/app_topbar_view"/>
-   <!-- <RelativeLayout
-        android:id="@+id/CQ_Play_TopLayout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/app_toolbar_height"
-        android:background="@color/APPStartBarColor"
-        android:paddingLeft="@dimen/app_padding_size"
-        android:paddingRight="@dimen/app_padding_size">
+    <include
+        android:id="@+id/Stars_Play_TopBarLayout"
+        layout="@layout/app_topbar2_view"/>
 
-        <ImageView
-            android:id="@+id/CQ_Play_Return"
-            android:layout_width="30dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/go_back"/>
-
-        <TextView
-            android:id="@+id/CQ_Play_Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:ellipsize="end"
-            android:maxEms="9"
-            android:textColor="@color/White"
-            android:textSize="@dimen/app_title_size"/>
-    </RelativeLayout>-->
     <LinearLayout
+        android:id="@+id/Stars_Play_TopLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/Stars_Play_TopBarLayout"
         android:background="@color/White">
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
             android:padding="10dp">
             <TextView
+                android:id="@+id/Stars_Play_StopIssue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:textColor="@color/AppColor"
+                android:textSize="@dimen/text_14dp"
+                android:text="暂停投注"
+                android:visibility="gone"/>
+            <TextView
                 android:id="@+id/Stars_Play_ThisIssue"
                 style="@style/Text_WW_Black"
                 android:layout_width="match_parent"
                 android:gravity="center"
+                android:textSize="@dimen/text_14dp"
                 android:text="距000期投注截止"/>
             <TextView
                 android:id="@+id/Stars_Play_CountDown"
                 style="@style/Text_WW_AppColor"
                 android:layout_width="match_parent"
                 android:gravity="center"
+                android:layout_below="@id/Stars_Play_ThisIssue"
                 android:layout_marginTop="5dp"
+                android:textSize="@dimen/text_14dp"
                 android:text="00:00"/>
-        </LinearLayout>
+        </RelativeLayout>
         <View
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="@color/BorderColor"
             android:layout_margin="5dp"/>
         <RelativeLayout
+            android:id="@+id/Stars_Play_HistoryLottery"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="10dp">
             <TextView
-                android:id="@+id/Stars_Play_HintText"
                 style="@style/Text_WW_Black"
                 android:layout_centerHorizontal="true"
-                android:text="000期开奖结果"/>
-            <TextView
-                style="@style/Text_WW_AppColor"
-                android:layout_below="@id/Stars_Play_HintText"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:text="0"/>
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/text_14dp"
+                android:text="历史开奖结果"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -89,8 +79,81 @@
         </RelativeLayout>
     </LinearLayout>
 
+    <!--<LinearLayout
+        android:id="@+id/Stars_Play_BottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:background="@color/White">
+        <LinearLayout
+            android:id="@+id/Stars_Play_Delete"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/delete"/>
+            <TextView
+                style="@style/Text_WW_HintGreyColor"
+                android:layout_marginTop="3dp"
+                android:text="清空"/>
+        </LinearLayout>
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:background="@color/BorderColor"/>
+        <LinearLayout
+            android:id="@+id/Stars_Play_SharkIt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/shark_it"/>
+            <TextView
+                style="@style/Text_WW_HintGreyColor"
+                android:layout_marginTop="3dp"
+                android:text="机选"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/Stars_Play_SubmitContent"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="left|center_vertical"
+            android:maxLines="1"
+            android:textColor="@color/TextBlack"
+            android:textSize="@dimen/text_12dp"
+            android:textColorHint="@color/HintTextColor"
+            android:hint="摇一下,机选一注"
+            />
+        <Button
+            android:id="@+id/Stars_Play_SubmitBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            style="?attr/borderlessButtonStyle"
+            android:background="@drawable/shape_app_4"
+            android:layout_marginRight="@dimen/app_padding_size"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/White"
+            android:textSize="@dimen/text_14dp"
+            android:text="提交"/>
+    </LinearLayout>-->
     <FrameLayout
         android:id="@+id/Stars_Play_FrameLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_below="@id/Stars_Play_TopLayout"/>
+</RelativeLayout>

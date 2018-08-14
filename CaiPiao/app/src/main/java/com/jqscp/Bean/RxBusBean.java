@@ -14,6 +14,7 @@ public class RxBusBean implements Parcelable {
     private RxBusType type;
     private String content;
     private String flag;
+    private int intType;
     private Object mObject;
 
 
@@ -37,6 +38,25 @@ public class RxBusBean implements Parcelable {
         this.type = type;
         this.content = content;
         this.flag = flag;
+    }
+
+    public RxBusBean(RxBusType type, int intType, Object object) {
+        this.type = type;
+        this.intType = intType;
+        mObject = object;
+    }
+
+    public RxBusBean(RxBusType type, int intType) {
+        this.type = type;
+        this.intType = intType;
+    }
+
+    public int getIntType() {
+        return intType;
+    }
+
+    public void setIntType(int intType) {
+        this.intType = intType;
     }
 
     public Object getObject() {

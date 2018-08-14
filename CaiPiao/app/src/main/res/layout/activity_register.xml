@@ -4,31 +4,156 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/AppColor"
     android:orientation="vertical"
     tools:context="com.jqscp.Activity.Login.LoginActivity">
-    <include layout="@layout/app_topbar_view"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/app_padding_size"
+        android:paddingRight="@dimen/app_padding_size">
+
+        <ImageView
+            android:id="@+id/App_TopBar_Return"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="20dp"
+            android:paddingTop="20dp"
+            android:src="@drawable/go_back_cha"/>
+
+        <TextView
+            android:id="@+id/App_TopBar_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/App_TopBar_Return"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:text="注册"
+            android:textColor="@color/White"
+            android:textSize="@dimen/app_title_size"/>
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/Register_UserPhone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14dp"
-        android:textColor="@color/Black"
-        android:textColorHint="@color/HintTextColor"
-        android:hint="请输入手机号"/>
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/app_padding_size"
+        android:layout_marginRight="@dimen/app_padding_size"
+        android:background="@null"
+        android:gravity="bottom"
+        android:hint="请输入您的手机号码"
+        android:inputType="number"
+        android:maxEms="11"
+        android:paddingBottom="10dp"
+        android:textColor="@color/White"
+        android:textColorHint="@color/HintWhiteColor"
+        android:textSize="14dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/app_padding_size"
+        android:layout_marginRight="@dimen/app_padding_size"
+        android:background="@color/BorderColor"/>
+
     <EditText
         android:id="@+id/Register_UserPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14dp"
-        android:textColor="@color/Black"
-        android:textColorHint="@color/HintTextColor"
-        android:hint="请输入密码"/>
-    <Button
-        android:id="@+id/Register_toRegister"
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/app_padding_size"
+        android:layout_marginRight="@dimen/app_padding_size"
+        android:background="@null"
+        android:gravity="bottom"
+        android:hint="请输入您的登录密码"
+        android:inputType="textPassword"
+        android:paddingBottom="10dp"
+        android:textColor="@color/White"
+        android:textColorHint="@color/HintWhiteColor"
+        android:textSize="14dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/app_padding_size"
+        android:layout_marginRight="@dimen/app_padding_size"
+        android:background="@color/BorderColor"/>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="立即注册"/>
+        android:layout_marginLeft="@dimen/app_padding_size"
+        android:layout_marginRight="@dimen/app_padding_size"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/Register_PhoneCardBtn"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/shape_white_4"
+            android:text="获取验证码"
+            android:textColor="@color/AppColor"
+            android:textSize="14dp"/>
+
+        <EditText
+            android:id="@+id/Register_PhoneCard"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_toLeftOf="@id/Register_PhoneCardBtn"
+            android:background="@null"
+            android:gravity="bottom"
+            android:hint="请输入您的短信验证码"
+            android:inputType="number"
+            android:maxEms="6"
+            android:paddingBottom="10dp"
+            android:textColor="@color/White"
+            android:textColorHint="@color/HintWhiteColor"
+            android:textSize="14dp"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/app_padding_size"
+        android:layout_marginRight="@dimen/app_padding_size"
+        android:background="@color/BorderColor"/>
+
+    <Button
+        android:id="@+id/Register_toRegister"
+        style="?attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_btn_height"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="@dimen/app_padding_size"
+        android:layout_marginRight="@dimen/app_padding_size"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/shape_white_4"
+        android:text="立即注册"
+        android:textColor="@color/AppColor"
+        android:textSize="@dimen/app_btn_size"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/app_padding_size"
+        android:layout_marginRight="@dimen/app_padding_size">
+        <CheckBox
+            android:id="@+id/Register_CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/CustomCheckboxTheme"/>
+        <TextView
+            style="@style/Text_WW_Black"
+            android:textColor="@color/White"
+            android:layout_marginLeft="5dp"
+            android:text="我已满18周岁并同意接受"/>
+        <TextView
+            android:id="@+id/Register_Terms"
+            style="@style/Text_WW_Black"
+            android:textColor="@color/Black"
+            android:text="《用户服务及隐私条款》"/>
+    </LinearLayout>
 
 </LinearLayout>

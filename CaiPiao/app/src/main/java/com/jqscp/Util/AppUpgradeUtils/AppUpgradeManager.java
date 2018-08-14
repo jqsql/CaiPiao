@@ -35,13 +35,13 @@ public class AppUpgradeManager {
     private Context appContext;
     private NotificationClickReceiver mNotificationClickReceiver;
     private DownloadReceiver mDownloaderReceiver;
-    private String apkName = "umsapp.apk";
+    private String apkName = "gp_c.apk";
     //apk下载文件的路径
     private String downloadApkPath;
     //服务器返回的版本信息
     private SystemVersion latestVersion;
 
-    public AppUpgradeManager(Activity activity, SystemVersion version) {
+    private AppUpgradeManager(Activity activity, SystemVersion version) {
         mActivity=activity;
         appContext = activity.getApplicationContext();
         latestVersion = version;
@@ -168,7 +168,7 @@ public class AppUpgradeManager {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//7.0以上
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            Uri contentUri = FileProvider.getUriForFile(appContext, "com.myview.provider", apkFile);
+            Uri contentUri = FileProvider.getUriForFile(appContext, "com.jqscp.provider", apkFile);
             intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
         } else {
             intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");

@@ -27,7 +27,7 @@ public class BaseItemDecoration extends RecyclerView.ItemDecoration{
     }
     public BaseItemDecoration(Context context,ManagerType manager) {
         this.mManagerType=manager;
-        this.topBottom = DisplayUtil.dip2px(context,8);
+        this.topBottom = DisplayUtil.dip2px(context,1);
     }
     public BaseItemDecoration(Context context,int space ,ManagerType manager, int size) {
         this.size=size;

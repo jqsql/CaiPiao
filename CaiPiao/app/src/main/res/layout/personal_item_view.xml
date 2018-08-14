@@ -24,22 +24,26 @@
         android:textSize="@dimen/text_16dp"/>
 
 
-    <ImageView
-        android:id="@+id/ImageView01"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/goto_icon"/>
+        android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/tv_item_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/ImageView01"
-        android:layout_marginRight="10dp"
-        android:layout_centerVertical="true"
-        android:textColor="@color/TextBlack"
-        android:textSize="@dimen/text_14dp"/>
+        <TextView
+            android:id="@+id/tv_item_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/TextBlack"
+            android:textSize="@dimen/text_14dp"/>
 
+        <ImageView
+            android:id="@+id/ImageView01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/goto_icon"/>
+
+    </LinearLayout>
 </RelativeLayout>

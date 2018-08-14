@@ -18,14 +18,19 @@
     <color name="Green">#2ABC23</color>
     <!--hint提示文字颜色-->
     <color name="HintTextColor">#bfbfbf</color>
+    <color name="HintWhiteColor">#FEF3F2</color>
     <!--普通文本黑色-->
     <color name="TextBlack">#808080</color>
+    <!--小标题文本黑色-->
+    <color name="TitleBlack">#7E7E7E</color>
     <!--分割线颜色-->
     <color name="BorderColor">#bfbfbf</color>
+    <color name="HintGreyColor">#C2C2C2</color>
     <color name="MainTextColor">#D6D6D6</color>
 
 
     <color name="transparent">#00000000</color>
+    <color name="transparent20">#33ffffff</color>
     <color name="Grey">#bfbfbf</color>
     <color name="Red">#fd5555</color>
 </resources>

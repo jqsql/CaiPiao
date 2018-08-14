@@ -16,7 +16,7 @@
         app:itemName="清除缓存"
         app:itemHaveIcon="false"
         app:itemValueColor="@color/AppColor"
-        app:itemValue="0MB"/>
+        app:itemValue="0KB"/>
     <com.jqscp.View.PersonalItemView
         android:id="@+id/Main_Setting_Share"
         android:layout_width="match_parent"

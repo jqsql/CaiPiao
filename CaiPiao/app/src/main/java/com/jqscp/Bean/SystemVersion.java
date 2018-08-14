@@ -7,9 +7,9 @@ import java.io.Serializable;
  */
 public class SystemVersion implements Serializable {
     String Id;//版本id
-    String Version;//版本号
-    String Address;//更新地址
-    boolean IsForce;//是否必须更新
+    String version;//版本号
+    String url;//更新地址
+    int force;//是否必须更新 1 强制更新, 0不强制
 
 
     public String getId() {
@@ -21,26 +21,26 @@ public class SystemVersion implements Serializable {
     }
 
     public String getVersionNnumber() {
-        return Version;
+        return version;
     }
 
     public void setVersionNnumber(String versionNnumber) {
-        Version = versionNnumber;
+        version = versionNnumber;
     }
 
     public String getUpdateAddress() {
-        return Address;
+        return url;
     }
 
     public void setUpdateAddress(String updateAddress) {
-        Address = updateAddress;
+        url = updateAddress;
     }
 
-    public boolean isNessary() {
-        return IsForce;
+    public int getForce() {
+        return force;
     }
 
-    public void setNessary(boolean nessary) {
-        IsForce = nessary;
+    public void setForce(int force) {
+        this.force = force;
     }
 }

@@ -144,7 +144,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder{
      */
     public BaseViewHolder setImage(int viewId,String path){
         ImageView imageView=getView(viewId);
-        ImageLoader.getInstance(mContext).setImages(imageView,path);
+        ImageLoader.getInstance(mContext,false).setImages(imageView,path);
         return this;
     }
 
@@ -156,7 +156,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder{
      */
     public BaseViewHolder setCircleImage(int viewId,String path){
         RoundedImageView imageView=getView(viewId);
-        ImageLoader.getInstance(mContext).setImages(imageView,path);
+        ImageLoader.getInstance(mContext,false).setImages(imageView,path);
         return this;
     }
     /**

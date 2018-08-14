@@ -34,6 +34,7 @@ public class BaseAppManager {
     public void setActivities(List<Activity> activities) {
         mActivities = activities;
     }
+
     /**
      * 添加Activity
      *
@@ -64,6 +65,22 @@ public class BaseAppManager {
     public synchronized void removeActivity(Activity activity) {
         if (mActivities.contains(activity)) {
             mActivities.remove(activity);
+        }
+    }
+
+    /**
+     * 移除某个Activity之上的所有activity
+     *
+     * @param activity
+     */
+    public synchronized void removeAllTopActivity(Activity activity) {
+        for (int i = mActivities.size() - 1; i >= 0; i--) {
+            if (mActivities.get(i) == activity) {
+                return;
+            }
+            if (mActivities.get(i) != null)
+                mActivities.get(i).finish();
+            mActivities.remove(i);
         }
     }
 

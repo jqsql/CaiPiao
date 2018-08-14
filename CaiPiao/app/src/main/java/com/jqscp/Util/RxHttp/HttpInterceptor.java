@@ -1,7 +1,12 @@
 package com.jqscp.Util.RxHttp;
 
+import android.content.Intent;
+
+import com.jqscp.ConfigConsts;
 import com.jqscp.MyApplication;
+import com.jqscp.Service.MyTokenService;
 import com.jqscp.Util.APPUtils.ALog;
+import com.jqscp.Util.APPUtils.Sharedpreferences_Utils;
 
 import java.io.IOException;
 
@@ -46,9 +51,9 @@ public class HttpInterceptor implements Interceptor {
         //if(body!=null) {
         //RequestBody newBody = null;
         if(url.url().toString().contains("?")) {
-            url = HttpUrl.parse(url.url().toString() + "&token=" + MyApplication.ServerToken);
+            url = HttpUrl.parse(url.url().toString() + "&token=" + ConfigConsts.ServerToken);
         }else {
-            url = HttpUrl.parse(url.url().toString() + "?token=" + MyApplication.ServerToken);
+            url = HttpUrl.parse(url.url().toString() + "?token=" + ConfigConsts.ServerToken);
         }
            /* if (body instanceof FormBody) {
                 url=HttpUrl.parse(url.url().toString()+"?token="+MyApplication.ServerToken);
@@ -63,18 +68,19 @@ public class HttpInterceptor implements Interceptor {
                 .url(url)
                 .method(request.method(), body)
                 .build();
-        return chain.proceed(newRequest);
+        //return chain.proceed(newRequest);
         // }
         //}
         // try the request
-        //Response originalResponse = chain.proceed(request);
-        //int code = originalResponse.code();
-        /*if (code == -200) {//根据和服务端的约定判断token过期
-            MyApplication.mContext.startService(
-                    new Intent(MyApplication.mContext, MyTokenService.class)
+        Response originalResponse = chain.proceed(newRequest);
+        int code = originalResponse.code();
+        if (code == 999 && ConfigConsts.isLogin && Sharedpreferences_Utils.getInstance(MyApplication.getMContext()).getBoolean("isUserLogin")) {
+            //根据和服务端的约定判断token过期
+            MyApplication.getMContext().startService(
+                    new Intent(MyApplication.getMContext(), MyTokenService.class)
                             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-        }*/
-        //return originalResponse;
+        }
+        return originalResponse;
     }
 
     /**
@@ -87,7 +93,7 @@ public class HttpInterceptor implements Interceptor {
         MultipartBody.Builder builder = new MultipartBody.Builder();
         builder.setType(MultipartBody.FORM);
         //添加自定义携带参数
-        String data = MyApplication.ServerToken;
+        String data = ConfigConsts.ServerToken;
         builder.addFormDataPart("token", data);
         //添加原请求体
         for (int i = 0; i < body.size(); i++) {
@@ -105,7 +111,7 @@ public class HttpInterceptor implements Interceptor {
     private FormBody addParamsToFormBody(FormBody body) {
         FormBody.Builder builder = new FormBody.Builder();
         //添加自定义携带参数
-        String data = MyApplication.ServerToken;
+        String data = ConfigConsts.ServerToken;
         builder.add("token", data);
         //添加原请求体
         for (int i = 0; i < body.size(); i++) {

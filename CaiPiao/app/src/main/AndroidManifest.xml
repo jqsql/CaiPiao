@@ -12,6 +12,11 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <!-- 震动权限 -->
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <!-- 文件读取的权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!-- 向SD卡中创建或者删除的权限 -->
+    <uses-permission android:name="andorid.permission.MONUN_UNMOUNT_FILESYSTEMS"/>
 
     <application
         android:name=".MyApplication"
@@ -30,6 +35,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <service android:name=".Service.MyTokenService"/>
+
         <activity android:name=".Activity.MainActivity">
         </activity>
         <activity android:name=".Activity.Plays.StarsPlayActivity">
@@ -42,6 +50,73 @@
 
         <activity android:name=".Activity.MySelf.SettingActivity">
         </activity>
+        <activity android:name=".Activity.MySelf.SafetyCenterActivity">
+        </activity>
+        <activity android:name=".Activity.MySelf.BettingRecordActivity">
+        </activity>
+        <activity android:name=".Activity.MySelf.AccountDetailsActivity"/>
+        <activity android:name=".Activity.Setting.ShareToActivity">
+        </activity>
+        <activity android:name=".Activity.Setting.AboutUsActivity">
+        </activity>
+        <activity android:name=".Activity.Setting.SuggestionActivity">
+        </activity>
+        <activity android:name=".Activity.Setting.ChangePwdActivity">
+        </activity>
+        <activity android:name=".Activity.Setting.ForgetPwdActivity">
+        </activity>
+        <activity android:name=".Activity.Setting.HelpCenterActivity">
+        </activity>
+        <activity android:name=".Activity.Details.BettingDetailsActivity">
+        </activity>
+        <activity android:name=".Activity.Details.BettingPursueDetailsActivity">
+        </activity>
+        <activity android:name=".Activity.MySelf.NoticeMessageActivity">
+        </activity>
+        <activity android:name=".Activity.Setting.ChangeNameActivity">
+        </activity>
+        <activity
+            android:name=".Activity.Orders.CQ_SSC_OrderActivity"
+            android:launchMode="singleTask">
+        </activity>
+        <activity android:name=".Activity.Pays.PayOrderActivity">
+        </activity>
+        <activity android:name=".Activity.MySelf.WithdrawActivity">
+        </activity>
+        <activity android:name=".Activity.MySelf.BankListActivity">
+        </activity>
+        <activity android:name=".Activity.MySelf.AddBnkActivity">
+        </activity>
+        <activity android:name=".Activity.MySelf.ChooseBankNameActivity">
+        </activity>
+        <activity android:name=".Activity.Plays.SD11_5PlayActivity"/>
+        <activity
+            android:name=".Activity.Orders.SD11_5_OrderActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".Activity.Pays.PaySuccessActivity">
+        </activity>
+        <activity android:name=".Activity.Lotterys.HistoryLotteryActivity">
+        </activity>
+        <activity android:name=".Activity.Lotterys.LotteryDetailsActivity">
+        </activity>
+        <activity android:name=".Activity.Plays.K3PlayActivity"/>
+        <activity
+            android:name=".Activity.Orders.K3_OrderActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".Activity.WebShowActivity">
+        </activity>
+
+        <!-- 版本更新 -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.jqscp.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+
     </application>
 
 </manifest>

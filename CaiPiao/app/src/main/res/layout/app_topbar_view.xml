@@ -19,13 +19,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/App_TopBar_Return"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:maxEms="9"
         android:ellipsize="end"
         android:textSize="@dimen/app_title_size"
-        android:textColor="@color/Black"
-        android:textStyle="bold"/>
+        android:textColor="@color/Black"/>
     <TextView
         android:id="@+id/App_TopBar_HintText"
         android:layout_width="wrap_content"
@@ -34,5 +33,13 @@
         android:layout_alignParentRight="true"
         android:textSize="@dimen/app_content_size"
         android:textColor="@color/TextBlack"
+        android:visibility="gone"/>
+    <ImageView
+        android:id="@+id/App_TopBar_HintIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingLeft="20dp"
+        android:layout_alignParentRight="true"
         android:visibility="gone"/>
 </RelativeLayout>

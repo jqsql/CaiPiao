@@ -39,4 +39,10 @@ public abstract class BaseTypeRecyclerAdapter<T> extends BaseRecyclerAdapter<T>{
         BaseViewHolder holder = BaseViewHolder.get(mContext, parent, layoutId);
         return holder;
     }
+
+    @Override
+    public void setData(List<T> list) {
+        super.setData(list);
+        mList=list;
+    }
 }

@@ -19,18 +19,7 @@ public class UiUtils {
 	public static Context getContext(){
 		return MyApplication.getMContext();
 	}
-	
-	public static int dip2px(int dip) {
-		final float scale = getResource().getDisplayMetrics().density;
-		return (int) (dip * scale + 0.5f);
-	}
 
-	/** pxת��dip */
-
-	public static int px2dip(int px) {
-		final float scale = getResource().getDisplayMetrics().density;
-		return (int) (px / scale + 0.5f);
-	}
 
 	public static int getWindowsWidth(Activity activity){
 		DisplayMetrics dm = new DisplayMetrics();
@@ -46,11 +35,19 @@ public class UiUtils {
 		return View.inflate(getContext(), id, null);
 	}
 
-	public static Drawable getDrawalbe(int id) {
-		return getResource().getDrawable(id);
-	}
+	/**
+	 * 手机格式化
+	 * @param phone
+	 */
+	public static String setPhoneHide(String phone){
+		if(phone==null || phone.isEmpty())
+			return "";
+		if(phone.length()!=11){
+			return phone;
+		}else {
+			return phone.substring(0,3)+"****"+phone.substring(7,11);
+		}
 
-	public static int getDimens(int homePictureHeight) {
-		return (int) getResource().getDimension(homePictureHeight);
+
 	}
 }

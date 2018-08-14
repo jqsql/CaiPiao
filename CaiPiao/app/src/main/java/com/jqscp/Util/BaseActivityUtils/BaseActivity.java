@@ -2,13 +2,15 @@ package com.jqscp.Util.BaseActivityUtils;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +18,15 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.jqscp.ConfigConsts;
 import com.jqscp.MyApplication;
 import com.jqscp.R;
 import com.jqscp.Util.APPUtils.ALog;
-import com.jqscp.Util.APPUtils.DisplayUtil;
 import com.jqscp.Util.APPUtils.OSUtils;
 import com.jqscp.Util.APPUtils.Sharedpreferences_Utils;
-import com.jqscp.Util.StatusBarUtils.StatusBarColor;
+import com.jqscp.View.Dialog_Hint;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -41,10 +43,11 @@ public class BaseActivity extends AppCompatActivity {
     private LinearLayout mLinearLayout;//最外层布局
     private FrameLayout mFrameLayout;//用户显示布局
     private View mViewStatusBarPlace;//状态栏等高度布局
-    private boolean isFullScreen=false;//是否全屏显示
-    private boolean fontIconDark=false;//状态栏字体和图标颜色是否为深色//true会改变状态栏文字为黑色
-    private int mStatusBarColor=R.color.APPStartBarColor;//状态栏颜色
-    public int mStatusBarHeight=0;//状态栏高度
+    private boolean isFullScreen = false;//是否全屏显示
+    private boolean fontIconDark = false;//状态栏字体和图标颜色是否为深色//true会改变状态栏文字为黑色
+    private int mStatusBarColor = R.color.APPStartBarColor;//状态栏颜色
+    public int mStatusBarHeight = 0;//状态栏高度
+
     //----------------沉浸式End-----------------------
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,16 +58,18 @@ public class BaseActivity extends AppCompatActivity {
         BaseAppManager.getInstance().addActivity(this);//将当前activity添加到队列里面
 
         creatLayout();
-        setFontIconDark(true,mStatusBarColor);//修改状态栏颜色
+        setStatusBarColor();
     }
+
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
-        if(mFrameLayout!=null){
-            mFrameLayout.addView(LayoutInflater.from(this).inflate(layoutResID,null));
-        }else {
+        if (mFrameLayout != null) {
+            mFrameLayout.addView(LayoutInflater.from(this).inflate(layoutResID, null));
+        } else {
             super.setContentView(layoutResID);
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -108,22 +113,57 @@ public class BaseActivity extends AppCompatActivity {
 
     /**
      * 判断当前用户是否登陆
+     *
      * @return
      */
-    public boolean isUserLogin(){
-        return MyApplication.isLogin && Sharedpreferences_Utils.getInstance(this).getBoolean("isUserLogin");
+    public boolean isUserLogin() {
+        return ConfigConsts.isLogin && Sharedpreferences_Utils.getInstance(this).getBoolean("isUserLogin");
     }
 
 
     /**
      * 数据正在加载的展示
      */
-    public void LoaderDialog(){
+    public void LoaderDialog() {
 
     }
+
+    /**
+     * 结果提示框
+     */
+    public void hintDialogShort(String hint) {
+        if (hint == null)
+            return;
+        Dialog_Hint.Instance(this, hint, null).dismissDelayed();
+    }
+
+    /**
+     * 结果提示框
+     */
+    public void showHintDialog(String hint) {
+        if (hint == null)
+            return;
+        Dialog_Hint.Instance(this, hint, null).show();
+    }
+
+    /**
+     * 结果提示框
+     */
+    public void dismissHintDialog() {
+        Dialog_Hint.Instance(this, "", null).dismiss();
+    }
+
+
+
     /**----------------------------沉浸式分界线---------------------------*/
+    protected void setStatusBarColor(){
+        setFontIconDark(true, mStatusBarColor);//修改状态栏颜色
+    }
+
+
     /**
      * 设置是否为深色，true则将状态栏字体颜色变为黑色
+     *
      * @param fontIconDark
      */
     protected boolean setFontIconDark(boolean fontIconDark, int statusBarColor) {
@@ -135,6 +175,7 @@ public class BaseActivity extends AppCompatActivity {
 
     /**
      * 设置是否为全屏模式
+     *
      * @param fullScreen
      */
     protected boolean setFullScreen(boolean fullScreen) {
@@ -145,11 +186,11 @@ public class BaseActivity extends AppCompatActivity {
     /**
      * 创建布局
      */
-    private void creatLayout(){
-        mLinearLayout=new LinearLayout(this);
-        mFrameLayout=new FrameLayout(this);
+    private void creatLayout() {
+        mLinearLayout = new LinearLayout(this);
+        mFrameLayout = new FrameLayout(this);
         mViewStatusBarPlace = new View(this);
-        mStatusBarHeight=getStatusBarHeight();
+        mStatusBarHeight = getStatusBarHeight();
         ViewGroup.LayoutParams params2 = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mStatusBarHeight);
         mViewStatusBarPlace.setLayoutParams(params2);
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -158,15 +199,15 @@ public class BaseActivity extends AppCompatActivity {
         mFrameLayout.setLayoutParams(params);
         ViewGroup mContentView = (ViewGroup) findViewById(Window.ID_ANDROID_CONTENT);
         mContentView.addView(mLinearLayout);
-        mLinearLayout.addView(mViewStatusBarPlace,0);
-        mLinearLayout.addView(mFrameLayout,1);
+        mLinearLayout.addView(mViewStatusBarPlace, 0);
+        mLinearLayout.addView(mFrameLayout, 1);
     }
 
     /**
      * 设置沉浸式状态栏 * * @param fontIconDark 状态栏字体和图标颜色是否为深色
      */
     protected boolean setImmersiveStatusBar(int statusBarColor) {
-        if(setTranslucentStatus()) {
+        if (setTranslucentStatus()) {
             if (fontIconDark) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M || OSUtils.isMiui() || OSUtils.isFlyme()) {
                     setStatusBarFontIconDark(true);
@@ -176,29 +217,30 @@ public class BaseActivity extends AppCompatActivity {
                         statusBarColor = 0xffcccccc;
                     }
                 }
-            }else {
-                statusBarColor=mStatusBarColor;
+            } else {
+                statusBarColor = mStatusBarColor;
             }
             setStatusBarPlaceColor(statusBarColor);
             return true;
-        }else {
+        } else {
             return false;
         }
     }
 
     private void setStatusBarPlaceColor(int statusColor) {
-        if(mLinearLayout==null || mViewStatusBarPlace==null)
+        if (mLinearLayout == null || mViewStatusBarPlace == null)
             return;
         if (!isFullScreen) {
             mViewStatusBarPlace.setBackgroundColor(getResources().getColor(statusColor));
             mViewStatusBarPlace.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             mViewStatusBarPlace.setVisibility(View.GONE);
         }
     }
 
     /**
      * 获取状态栏高度
+     *
      * @return
      */
     protected int getStatusBarHeight() {
@@ -285,5 +327,36 @@ public class BaseActivity extends AppCompatActivity {
             }
         }
     }
+    /**-------------------------------------END---------------------------------------------**/
+    public static PackageInfo getPackageInfo() {
+        PackageManager manager = MyApplication.getMContext().getPackageManager();
+        PackageInfo info = null;
+        try {
+            info = manager.getPackageInfo(MyApplication.getMContext().getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
+        return info;
+    }
+    /**
+     * 返回键拦截监听
+     *
+     * @return
+     */
+    public boolean onKeyBackClick() {
+        return false;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                if (onKeyBackClick())
+                    return true;
+                break;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

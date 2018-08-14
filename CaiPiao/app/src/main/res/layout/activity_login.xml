@@ -4,37 +4,113 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/AppColor"
     android:orientation="vertical"
     tools:context="com.jqscp.Activity.Login.LoginActivity">
-    <include layout="@layout/app_topbar_view"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/app_padding_size"
+        android:paddingRight="@dimen/app_padding_size">
+
+        <ImageView
+            android:id="@+id/App_TopBar_Return"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="20dp"
+            android:paddingTop="20dp"
+            android:src="@drawable/go_back_cha"/>
+
+        <TextView
+            android:id="@+id/App_TopBar_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/App_TopBar_Return"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:text="登录"
+            android:textColor="@color/White"
+            android:textSize="@dimen/app_title_size"/>
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/Login_UserPhone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14dp"
-        android:textColor="@color/Black"
-        android:textColorHint="@color/HintTextColor"
-        android:hint="请输入手机号"/>
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/app_padding_size"
+        android:layout_marginRight="@dimen/app_padding_size"
+        android:background="@null"
+        android:gravity="bottom"
+        android:paddingBottom="10dp"
+        android:hint="请输入您的手机号码"
+        android:inputType="number"
+        android:maxEms="11"
+        android:textColor="@color/White"
+        android:textColorHint="@color/HintWhiteColor"
+        android:textSize="14dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/app_padding_size"
+        android:layout_marginRight="@dimen/app_padding_size"
+        android:background="@color/BorderColor"/>
+
     <EditText
         android:id="@+id/Login_UserPassword"
         android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:gravity="bottom"
+        android:paddingBottom="10dp"
+        android:inputType="textPassword"
+        android:layout_marginLeft="@dimen/app_padding_size"
+        android:layout_marginRight="@dimen/app_padding_size"
+        android:hint="请输入您的登录密码"
+        android:textColor="@color/White"
+        android:textColorHint="@color/HintWhiteColor"
+        android:textSize="14dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/app_padding_size"
+        android:layout_marginRight="@dimen/app_padding_size"
+        android:background="@color/BorderColor"/>
+    <TextView
+        android:id="@+id/Login_ForgetPwd"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14dp"
-        android:textColor="@color/Black"
-        android:textColorHint="@color/HintTextColor"
-        android:hint="请输入密码"/>
+        android:layout_marginTop="120dp"
+        android:layout_gravity="end"
+        android:paddingRight="@dimen/app_padding_size"
+        android:textColor="@color/White"
+        android:textSize="@dimen/text_16dp"
+        android:text="忘记密码"/>
     <Button
         android:id="@+id/Login_toLogin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="登陆"/>
+        android:layout_height="@dimen/app_btn_height"
+        style="?attr/borderlessButtonStyle"
+        android:background="@drawable/shape_white_4"
+        android:layout_marginLeft="@dimen/app_padding_size"
+        android:layout_marginRight="@dimen/app_padding_size"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="@dimen/app_btn_size"
+        android:textColor="@color/AppColor"
+        android:text="登  陆"/>
+
     <Button
         android:id="@+id/Login_toRegister"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="注册"/>
+        android:layout_height="@dimen/app_btn_height"
+        style="?attr/borderlessButtonStyle"
+        android:background="@drawable/shape_trap20_4"
+        android:layout_marginLeft="@dimen/app_padding_size"
+        android:layout_marginRight="@dimen/app_padding_size"
+        android:textSize="@dimen/app_btn_size"
+        android:textColor="@color/White"
+        android:text="注  册"/>
 
 </LinearLayout>

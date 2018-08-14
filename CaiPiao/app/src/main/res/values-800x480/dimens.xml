@@ -6,11 +6,13 @@
     <dimen name="app_content_size">10dp</dimen>
     <dimen name="app_main_size">10dp</dimen>
     <dimen name="app_btn_height">35dp</dimen>
+    <dimen name="app_btn_size">14dp</dimen>
 
-    <dimen name="main_me_topLayout_height">220dp</dimen>
+    <dimen name="main_me_topLayout_height">240dp</dimen>
     <dimen name="main_me_item_height">40dp</dimen>
     <dimen name="main_me_btn_width">40dp</dimen>
     <dimen name="main_me_btn_height">25dp</dimen>
+    <dimen name="text_10dp">7dp</dimen>
     <dimen name="text_12dp">8dp</dimen>
     <dimen name="text_14dp">10dp</dimen>
     <dimen name="text_16dp">12dp</dimen>

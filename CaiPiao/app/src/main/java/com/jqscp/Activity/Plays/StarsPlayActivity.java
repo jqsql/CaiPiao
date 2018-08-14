@@ -11,29 +11,36 @@ import android.os.Message;
 import android.os.Vibrator;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.SparseArray;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jqscp.Bean.BaseHttpBean;
 import com.jqscp.Bean.CurrentIssueBean;
 import com.jqscp.Bean.RxBusBean;
 import com.jqscp.Dao.BusinessDao;
-import com.jqscp.Dao.OnNoResultClick;
 import com.jqscp.Dao.OnResultClick;
+import com.jqscp.Dao.OnResultListClick;
+import com.jqscp.Fragment.Plays.BigStarPlayFragment;
 import com.jqscp.Fragment.Plays.FiveStarPlayFragment;
 import com.jqscp.Fragment.Plays.OneStarPlayFragment;
 import com.jqscp.Fragment.Plays.ThreeStarPlayFragment;
 import com.jqscp.Fragment.Plays.TwoStarPlayFragment;
 import com.jqscp.R;
-import com.jqscp.Util.APPUtils.ALog;
 import com.jqscp.Util.APPUtils.TimeUtils;
 import com.jqscp.Util.BaseActivityUtils.BaseActivity;
 import com.jqscp.Util.RxJavaUtils.RxBus;
 import com.jqscp.Util.RxJavaUtils.RxBusType;
 import com.jqscp.View.CQPlay_PopupWindow;
+import com.jqscp.View.HistoryPopupWindow;
+import com.jqscp.View.SerializableSparseArray;
 
+import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,30 +51,47 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
     private static final int BeginShake = 1000;
     //控件部分
     private TextView mTitle;//标题
+    private TextView mHintTitle;//右侧隐藏标题
+    private LinearLayout mTitleLayout;//
     private ImageView mReturn;//返回
-    private TextView mThisIssue, mCountDown;//当前期号、倒计时
+    private ImageView mPlayIcon;//玩法界面才有
+    private TextView mStopIssue, mThisIssue, mCountDown;//暂停投注、当前期号、倒计时
+    private RelativeLayout mHistoryLottery;//历史开奖结果
+
+
     //工具&数据
     private FragmentManager fManager;
     private CountDownTimer mCountDownTimer;//倒计时工具
-    private OneStarPlayFragment mOneStarPlayFragment;
+    private OneStarPlayFragment mOneStarPlayFragment1, mOneStarPlayFragment3, mOneStarPlayFragment5, mOneStarPlayFragment6;
     private TwoStarPlayFragment mTwoStarPlayFragment;
     private ThreeStarPlayFragment mThreeStarPlayFragment;
-    private FiveStarPlayFragment mFiveStarPlayFragment;
+    private FiveStarPlayFragment mFiveStarPlayFragment7, mFiveStarPlayFragment8;
+    private BigStarPlayFragment mBigStarPlayFragment;
+
+    private CQPlay_PopupWindow mCQPlayPopupWindow;
     //开启摇一摇
     private SensorManager mSensorManager;
     private Sensor mAccelerometerSensor;
     private boolean isShake;//是否正在摇
     private MyHandler mHandler;
-    private SparseArray<List<Integer>> mSparseArray = new SparseArray<>();
-    private int mType = 1;//玩法类型 (1:一星;2:二星直选;3:二星组选;4:三星直选;5:三星组三;6:三星组六;7:五星直选;8:五星通选;9:;)
+
+    private Bundle savedInstanceState;
+    private Bundle bundles;
+
+    //Flag
+    private int mType = 1;//玩法类型 (1:一星;2:二星直选;3:二星组选;4:三星直选;5:三星组三;6:三星组六;7:五星直选;8:五星通选;9:大小;)
+    private int mMakeType = 1;//玩法类型 (1:一星;2:二星直选;3:二星组选;4:三星直选;5:三星组三;6:三星组六;7:五星直选;8:五星通选;9:大小;)
     private int mGroup;//组的个数
     private int mNumber;//组每个至少选的个数
 
-    private CQPlay_PopupWindow mCQPlayPopupWindow;
-    private Bundle savedInstanceState;
-
+    private SerializableSparseArray<List<Integer>> mSparseArray = new SerializableSparseArray<>();//选中的号码集合
+    private List<List<String>> mLostList = new ArrayList<>();//遗漏号码集合
     private String mThisIssueContent;//当前期号
+    private String mSubmitContentStr;//选中号码内容
     private int mCountDownContent;//倒计时
+
+    private int PlayFlag;//0：重庆时时彩、1：新疆时时彩、2：天津时时彩
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,61 +102,111 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
         initData();
         initListen();
         getThisIssueData();
+        getLostNumber();
     }
 
     private void initView() {
         mReturn = findViewById(R.id.App_TopBar_Return);
+        mPlayIcon = findViewById(R.id.App_TopBar_PlayIcon);
         mTitle = findViewById(R.id.App_TopBar_Title);
+        mTitleLayout = findViewById(R.id.App_TopBar_TitleLayout);
+        mHintTitle = findViewById(R.id.App_TopBar_HintText);
+        mStopIssue = findViewById(R.id.Stars_Play_StopIssue);
         mThisIssue = findViewById(R.id.Stars_Play_ThisIssue);
         mCountDown = findViewById(R.id.Stars_Play_CountDown);
+        mHistoryLottery = findViewById(R.id.Stars_Play_HistoryLottery);
+
         fManager = getSupportFragmentManager();
         mHandler = new MyHandler(this);
     }
 
     private void initData() {
-        //初始赋值
-        mTitle.setText("一星直选");
+        bundles = getIntent().getExtras();
+        if (bundles != null) {
+            PlayFlag = bundles.getInt("PlayType");
+            //初始赋值
+            mMakeType = bundles.getInt("Type",1);
+            mType=mMakeType;
+            //用来判断是否是修改界面
+            boolean IsMake = bundles.getBoolean("IsMake",false);
+            if (IsMake) {
+                mTitle.setText(bundles.getString("TypeStr"));
+                mSubmitContentStr = bundles.getString("Number");
+            } else {
+                if(mType!=1){
+                    mTitle.setText(bundles.getString("TypeStr"));
+                }else {
+                    //初始赋值
+                    mTitle.setText("一星复式");
+                    mType = 1;
+                }
+            }
+        } else {
+            //初始赋值
+            mTitle.setText("一星复式");
+            mType = 1;
+        }
+        mHintTitle.setVisibility(View.VISIBLE);
+        mHintTitle.setText("玩法说明");
 
         initInterface();
 
-        /*BusinessDao.putCurrentIssue("1", 1, 1, 2, "20180503-118", new OnNoResultClick() {
-            @Override
-            public void success() {
-
+        if (!TextUtils.isEmpty(mSubmitContentStr)) {
+            String[] strings = mSubmitContentStr.split(",");
+            for (int i = 0; i < strings.length; i++) {
+                List<Integer> list = new ArrayList<>();
+                String[] strs = strings[i].split("");
+                for (int j = 0; j < strs.length; j++) {
+                    if (!TextUtils.isEmpty(strs[j]))
+                        list.add(Integer.parseInt(strs[j]));
+                }
+                mSparseArray.put(i+1, list);
             }
-
-            @Override
-            public void fail(Throwable throwable) {
-
-            }
-        });*/
-
+        }
     }
 
     private void initListen() {
-
+        //返回
         mReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-        mTitle.setOnClickListener(new View.OnClickListener() {
+        //玩法说明
+        mHintTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+            }
+        });
+        //历史开奖结果
+        mHistoryLottery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HistoryPopupWindow historyPopupWindow = new HistoryPopupWindow(StarsPlayActivity.this,PlayFlag);
+                historyPopupWindow.showAtLocation(findViewById(R.id.Stars_Play_ParentsLayout), Gravity.BOTTOM, 0, 0);
+            }
+        });
+        //玩法选择
+        mTitleLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPlayIcon.setImageResource(R.drawable.go_up);
                 mCQPlayPopupWindow = new CQPlay_PopupWindow(StarsPlayActivity.this, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        mSparseArray.clear();
                         switch (view.getId()) {
                             case R.id.CQPlay_1:
                                 //一星直选
                                 mType = 1;
-                                mTitle.setText("一星直选");
+                                mTitle.setText("一星复式");
                                 break;
                             case R.id.CQPlay_21:
                                 //二星直选
                                 mType = 2;
-                                mTitle.setText("二星直选");
+                                mTitle.setText("二星复式");
                                 break;
                             case R.id.CQPlay_22:
                                 //二星组选
@@ -142,19 +216,14 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
                             case R.id.CQPlay_31:
                                 //三星直选
                                 mType = 4;
-                                mTitle.setText("三星直选");
+                                mTitle.setText("三星复式");
                                 break;
                             case R.id.CQPlay_32:
-                                //三星组三单式
-                                mType = 0;
-                                mTitle.setText("三星组三单式");
+                                //三星组三
+                                mType = 5;
+                                mTitle.setText("三星组三");
                                 break;
                             case R.id.CQPlay_33:
-                                //三星组三复式
-                                mType = 0;
-                                mTitle.setText("三星组三复式");
-                                break;
-                            case R.id.CQPlay_34:
                                 //三星组六
                                 mType = 6;
                                 mTitle.setText("三星组六");
@@ -162,7 +231,7 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
                             case R.id.CQPlay_51:
                                 //五星直选
                                 mType = 7;
-                                mTitle.setText("五星直选");
+                                mTitle.setText("五星复式");
                                 break;
                             case R.id.CQPlay_52:
                                 //五星通选
@@ -171,11 +240,17 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
                                 break;
                             case R.id.CQPlay_big:
                                 //大小单双
-                                mType = 2;
+                                mType = 9;
                                 mTitle.setText("大小单双");
                                 break;
                         }
                         initInterface();
+                    }
+                }, new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        //popWindow消失监听
+                        mPlayIcon.setImageResource(R.drawable.go_down);
                     }
                 });
                 mCQPlayPopupWindow.showAsDropDown(findViewById(R.id.App_TopBar_Title), 0, 0);
@@ -187,23 +262,38 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
      * 界面更新
      */
     private void initInterface() {
+        Bundle mBundle = new Bundle();
+        mBundle.putInt("PlayType", PlayFlag);
+        mBundle.putSerializable("LostNumber", (Serializable) mLostList);
+        if (bundles != null && !TextUtils.isEmpty(mSubmitContentStr)) {
+            if(mType==mMakeType) {
+                mBundle.putSerializable("Content", mSparseArray);
+            }
+            mBundle.putBoolean("isModification", true);
+            mBundle.putLong("ID", bundles.getLong("ID"));
+        }
         FragmentTransaction transaction = fManager.beginTransaction();
         hideFragment(transaction);
         switch (mType) {
             case 1:
                 mGroup = 1;
                 mNumber = 1;
-                if (mOneStarPlayFragment == null) {
+                mBundle.putInt("Types", 1);
+                if (mOneStarPlayFragment1 == null) {
                     if (savedInstanceState != null) {
-                        mOneStarPlayFragment = (OneStarPlayFragment) fManager.findFragmentByTag("OneStarPlayFragment");
-                        mOneStarPlayFragment = new OneStarPlayFragment();
-                        transaction.add(R.id.Stars_Play_FrameLayout, mOneStarPlayFragment, "OneStarPlayFragment");
+                        mOneStarPlayFragment1 = (OneStarPlayFragment) fManager.findFragmentByTag("OneStarPlayFragment1");
+                        if (mOneStarPlayFragment1 == null)
+                            mOneStarPlayFragment1 = new OneStarPlayFragment();
+                        mOneStarPlayFragment1.setArguments(mBundle);
+                        transaction.add(R.id.Stars_Play_FrameLayout, mOneStarPlayFragment1, "OneStarPlayFragment1");
                     } else {
-                        mOneStarPlayFragment = new OneStarPlayFragment();
-                        transaction.add(R.id.Stars_Play_FrameLayout, mOneStarPlayFragment, "OneStarPlayFragment");
+                        mOneStarPlayFragment1 = new OneStarPlayFragment();
+                        mOneStarPlayFragment1.setArguments(mBundle);
+                        transaction.add(R.id.Stars_Play_FrameLayout, mOneStarPlayFragment1, "OneStarPlayFragment1");
                     }
                 } else {
-                    transaction.show(mOneStarPlayFragment);
+                    mOneStarPlayFragment1.setArguments(mBundle);
+                    transaction.show(mOneStarPlayFragment1);
                 }
                 break;
             case 2:
@@ -212,35 +302,39 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
                 if (mTwoStarPlayFragment == null) {
                     if (savedInstanceState != null) {
                         mTwoStarPlayFragment = (TwoStarPlayFragment) fManager.findFragmentByTag("TwoStarPlayFragment");
-                        mTwoStarPlayFragment = new TwoStarPlayFragment();
+                        if (mTwoStarPlayFragment == null)
+                            mTwoStarPlayFragment = new TwoStarPlayFragment();
+                        mTwoStarPlayFragment.setArguments(mBundle);
                         transaction.add(R.id.Stars_Play_FrameLayout, mTwoStarPlayFragment, "TwoStarPlayFragment");
                     } else {
                         mTwoStarPlayFragment = new TwoStarPlayFragment();
+                        mTwoStarPlayFragment.setArguments(mBundle);
                         transaction.add(R.id.Stars_Play_FrameLayout, mTwoStarPlayFragment, "TwoStarPlayFragment");
                     }
                 } else {
+                    mTwoStarPlayFragment.setArguments(mBundle);
                     transaction.show(mTwoStarPlayFragment);
                 }
                 break;
             case 3:
                 mGroup = 1;
                 mNumber = 2;
-                Bundle mBundle0 = new Bundle();
-                mBundle0.putInt("Types", 3);
-                if (mOneStarPlayFragment == null) {
+                mBundle.putInt("Types", 3);
+                if (mOneStarPlayFragment3 == null) {
                     if (savedInstanceState != null) {
-                        mOneStarPlayFragment = (OneStarPlayFragment) fManager.findFragmentByTag("OneStarPlayFragment");
-                        mOneStarPlayFragment = new OneStarPlayFragment();
-                        mOneStarPlayFragment.setArguments(mBundle0);
-                        transaction.add(R.id.Stars_Play_FrameLayout, mOneStarPlayFragment, "OneStarPlayFragment");
+                        mOneStarPlayFragment3 = (OneStarPlayFragment) fManager.findFragmentByTag("OneStarPlayFragment3");
+                        if (mOneStarPlayFragment3 == null)
+                            mOneStarPlayFragment3 = new OneStarPlayFragment();
+                        mOneStarPlayFragment3.setArguments(mBundle);
+                        transaction.add(R.id.Stars_Play_FrameLayout, mOneStarPlayFragment3, "OneStarPlayFragment3");
                     } else {
-                        mOneStarPlayFragment = new OneStarPlayFragment();
-                        mOneStarPlayFragment.setArguments(mBundle0);
-                        transaction.add(R.id.Stars_Play_FrameLayout, mOneStarPlayFragment, "OneStarPlayFragment");
+                        mOneStarPlayFragment3 = new OneStarPlayFragment();
+                        mOneStarPlayFragment3.setArguments(mBundle);
+                        transaction.add(R.id.Stars_Play_FrameLayout, mOneStarPlayFragment3, "OneStarPlayFragment3");
                     }
                 } else {
-                    mOneStarPlayFragment.setArguments(mBundle0);
-                    transaction.show(mOneStarPlayFragment);
+                    mOneStarPlayFragment3.setArguments(mBundle);
+                    transaction.show(mOneStarPlayFragment3);
                 }
                 break;
             case 4:
@@ -249,104 +343,122 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
                 if (mThreeStarPlayFragment == null) {
                     if (savedInstanceState != null) {
                         mThreeStarPlayFragment = (ThreeStarPlayFragment) fManager.findFragmentByTag("ThreeStarPlayFragment");
-                        mThreeStarPlayFragment = new ThreeStarPlayFragment();
+                        if (mThreeStarPlayFragment == null)
+                            mThreeStarPlayFragment = new ThreeStarPlayFragment();
+                        mThreeStarPlayFragment.setArguments(mBundle);
                         transaction.add(R.id.Stars_Play_FrameLayout, mThreeStarPlayFragment, "ThreeStarPlayFragment");
                     } else {
                         mThreeStarPlayFragment = new ThreeStarPlayFragment();
+                        mThreeStarPlayFragment.setArguments(mBundle);
                         transaction.add(R.id.Stars_Play_FrameLayout, mThreeStarPlayFragment, "ThreeStarPlayFragment");
                     }
                 } else {
+                    mThreeStarPlayFragment.setArguments(mBundle);
                     transaction.show(mThreeStarPlayFragment);
                 }
                 break;
             case 5:
                 mGroup = 1;
                 mNumber = 2;
-                Bundle mBundle1 = new Bundle();
-                mBundle1.putInt("Types", 5);
-                if (mOneStarPlayFragment == null) {
+                mBundle.putInt("Types", 5);
+                if (mOneStarPlayFragment5 == null) {
                     if (savedInstanceState != null) {
-                        mOneStarPlayFragment = (OneStarPlayFragment) fManager.findFragmentByTag("OneStarPlayFragment");
-                        mOneStarPlayFragment = new OneStarPlayFragment();
-                        mOneStarPlayFragment.setArguments(mBundle1);
-                        transaction.add(R.id.Stars_Play_FrameLayout, mOneStarPlayFragment, "OneStarPlayFragment");
+                        mOneStarPlayFragment5 = (OneStarPlayFragment) fManager.findFragmentByTag("OneStarPlayFragment5");
+                        if (mOneStarPlayFragment5 == null)
+                            mOneStarPlayFragment5 = new OneStarPlayFragment();
+                        mOneStarPlayFragment5.setArguments(mBundle);
+                        transaction.add(R.id.Stars_Play_FrameLayout, mOneStarPlayFragment5, "OneStarPlayFragment5");
                     } else {
-                        mOneStarPlayFragment = new OneStarPlayFragment();
-                        mOneStarPlayFragment.setArguments(mBundle1);
-                        transaction.add(R.id.Stars_Play_FrameLayout, mOneStarPlayFragment, "OneStarPlayFragment");
+                        mOneStarPlayFragment5 = new OneStarPlayFragment();
+                        mOneStarPlayFragment5.setArguments(mBundle);
+                        transaction.add(R.id.Stars_Play_FrameLayout, mOneStarPlayFragment5, "OneStarPlayFragment5");
                     }
                 } else {
-                    mOneStarPlayFragment.setArguments(mBundle1);
-                    transaction.show(mOneStarPlayFragment);
+                    mOneStarPlayFragment5.setArguments(mBundle);
+                    transaction.show(mOneStarPlayFragment5);
                 }
                 break;
             case 6:
                 mGroup = 1;
                 mNumber = 3;
-                Bundle mBundle2 = new Bundle();
-                mBundle2.putInt("Types", 6);
-                if (mOneStarPlayFragment == null) {
+                mBundle.putInt("Types", 6);
+                if (mOneStarPlayFragment6 == null) {
                     if (savedInstanceState != null) {
-                        mOneStarPlayFragment = (OneStarPlayFragment) fManager.findFragmentByTag("OneStarPlayFragment");
-                        mOneStarPlayFragment = new OneStarPlayFragment();
-                        mOneStarPlayFragment.setArguments(mBundle2);
-                        transaction.add(R.id.Stars_Play_FrameLayout, mOneStarPlayFragment, "OneStarPlayFragment");
+                        mOneStarPlayFragment6 = (OneStarPlayFragment) fManager.findFragmentByTag("OneStarPlayFragment6");
+                        if (mOneStarPlayFragment6 == null)
+                            mOneStarPlayFragment6 = new OneStarPlayFragment();
+                        mOneStarPlayFragment6.setArguments(mBundle);
+                        transaction.add(R.id.Stars_Play_FrameLayout, mOneStarPlayFragment6, "OneStarPlayFragment6");
                     } else {
-                        mOneStarPlayFragment = new OneStarPlayFragment();
-                        mOneStarPlayFragment.setArguments(mBundle2);
-                        transaction.add(R.id.Stars_Play_FrameLayout, mOneStarPlayFragment, "OneStarPlayFragment");
+                        mOneStarPlayFragment6 = new OneStarPlayFragment();
+                        mOneStarPlayFragment6.setArguments(mBundle);
+                        transaction.add(R.id.Stars_Play_FrameLayout, mOneStarPlayFragment6, "OneStarPlayFragment6");
                     }
                 } else {
-                    mOneStarPlayFragment.setArguments(mBundle2);
-                    transaction.show(mOneStarPlayFragment);
+                    mOneStarPlayFragment6.setArguments(mBundle);
+                    transaction.show(mOneStarPlayFragment6);
                 }
                 break;
             case 7:
                 mGroup = 5;
                 mNumber = 1;
-                if (mFiveStarPlayFragment == null) {
+                mBundle.putInt("Types", 7);
+                if (mFiveStarPlayFragment7 == null) {
                     if (savedInstanceState != null) {
-                        mFiveStarPlayFragment = (FiveStarPlayFragment) fManager.findFragmentByTag("FiveStarPlayFragment");
-                        mFiveStarPlayFragment = new FiveStarPlayFragment();
-                        transaction.add(R.id.Stars_Play_FrameLayout, mFiveStarPlayFragment, "FiveStarPlayFragment");
+                        mFiveStarPlayFragment7 = (FiveStarPlayFragment) fManager.findFragmentByTag("FiveStarPlayFragment7");
+                        if (mFiveStarPlayFragment7 == null)
+                            mFiveStarPlayFragment7 = new FiveStarPlayFragment();
+                        mFiveStarPlayFragment7.setArguments(mBundle);
+                        transaction.add(R.id.Stars_Play_FrameLayout, mFiveStarPlayFragment7, "FiveStarPlayFragment7");
                     } else {
-                        mFiveStarPlayFragment = new FiveStarPlayFragment();
-                        transaction.add(R.id.Stars_Play_FrameLayout, mFiveStarPlayFragment, "FiveStarPlayFragment");
+                        mFiveStarPlayFragment7 = new FiveStarPlayFragment();
+                        mFiveStarPlayFragment7.setArguments(mBundle);
+                        transaction.add(R.id.Stars_Play_FrameLayout, mFiveStarPlayFragment7, "FiveStarPlayFragment7");
                     }
                 } else {
-                    transaction.show(mFiveStarPlayFragment);
+                    mFiveStarPlayFragment7.setArguments(mBundle);
+                    transaction.show(mFiveStarPlayFragment7);
                 }
                 break;
             case 8:
                 mGroup = 5;
                 mNumber = 1;
-                if (mFiveStarPlayFragment == null) {
+                mBundle.putInt("Types", 8);
+                if (mFiveStarPlayFragment8 == null) {
                     if (savedInstanceState != null) {
-                        mFiveStarPlayFragment = (FiveStarPlayFragment) fManager.findFragmentByTag("FiveStarPlayFragment");
-                        mFiveStarPlayFragment = new FiveStarPlayFragment();
-                        transaction.add(R.id.Stars_Play_FrameLayout, mFiveStarPlayFragment, "FiveStarPlayFragment");
+                        mFiveStarPlayFragment8 = (FiveStarPlayFragment) fManager.findFragmentByTag("FiveStarPlayFragment8");
+                        if (mFiveStarPlayFragment8 == null)
+                            mFiveStarPlayFragment8 = new FiveStarPlayFragment();
+                        mFiveStarPlayFragment8.setArguments(mBundle);
+                        transaction.add(R.id.Stars_Play_FrameLayout, mFiveStarPlayFragment8, "FiveStarPlayFragment8");
                     } else {
-                        mFiveStarPlayFragment = new FiveStarPlayFragment();
-                        transaction.add(R.id.Stars_Play_FrameLayout, mFiveStarPlayFragment, "FiveStarPlayFragment");
+                        mFiveStarPlayFragment8 = new FiveStarPlayFragment();
+                        mFiveStarPlayFragment8.setArguments(mBundle);
+                        transaction.add(R.id.Stars_Play_FrameLayout, mFiveStarPlayFragment8, "FiveStarPlayFragment8");
                     }
                 } else {
-                    transaction.show(mFiveStarPlayFragment);
+                    mFiveStarPlayFragment8.setArguments(mBundle);
+                    transaction.show(mFiveStarPlayFragment8);
                 }
                 break;
             case 9:
-                mGroup = 5;
+                mGroup = 2;
                 mNumber = 1;
-                if (mFiveStarPlayFragment == null) {
+                if (mBigStarPlayFragment == null) {
                     if (savedInstanceState != null) {
-                        mFiveStarPlayFragment = (FiveStarPlayFragment) fManager.findFragmentByTag("FiveStarPlayFragment");
-                        mFiveStarPlayFragment = new FiveStarPlayFragment();
-                        transaction.add(R.id.Stars_Play_FrameLayout, mFiveStarPlayFragment, "FiveStarPlayFragment");
+                        mBigStarPlayFragment = (BigStarPlayFragment) fManager.findFragmentByTag("BigStarPlayFragment");
+                        if (mBigStarPlayFragment == null)
+                            mBigStarPlayFragment = new BigStarPlayFragment();
+                        mBigStarPlayFragment.setArguments(mBundle);
+                        transaction.add(R.id.Stars_Play_FrameLayout, mBigStarPlayFragment, "BigStarPlayFragment");
                     } else {
-                        mFiveStarPlayFragment = new FiveStarPlayFragment();
-                        transaction.add(R.id.Stars_Play_FrameLayout, mFiveStarPlayFragment, "FiveStarPlayFragment");
+                        mBigStarPlayFragment = new BigStarPlayFragment();
+                        mBigStarPlayFragment.setArguments(mBundle);
+                        transaction.add(R.id.Stars_Play_FrameLayout, mBigStarPlayFragment, "BigStarPlayFragment");
                     }
                 } else {
-                    transaction.show(mFiveStarPlayFragment);
+                    mBigStarPlayFragment.setArguments(mBundle);
+                    transaction.show(mBigStarPlayFragment);
                 }
                 break;
         }
@@ -355,12 +467,36 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
 
     private void hideFragment(FragmentTransaction transaction) {
         // TODO Auto-generated method stub
-        if (mOneStarPlayFragment != null) {
-            transaction.hide(mOneStarPlayFragment);
+        if (mOneStarPlayFragment1 != null) {
+            transaction.hide(mOneStarPlayFragment1);
         } else {
             if (savedInstanceState != null) {
-                mOneStarPlayFragment = (OneStarPlayFragment) fManager.findFragmentByTag("OneStarPlayFragment");
-                transaction.hide(mOneStarPlayFragment);
+                mOneStarPlayFragment1 = (OneStarPlayFragment) fManager.findFragmentByTag("OneStarPlayFragment1");
+                transaction.hide(mOneStarPlayFragment1);
+            }
+        }
+        if (mOneStarPlayFragment3 != null) {
+            transaction.hide(mOneStarPlayFragment3);
+        } else {
+            if (savedInstanceState != null) {
+                mOneStarPlayFragment3 = (OneStarPlayFragment) fManager.findFragmentByTag("OneStarPlayFragment3");
+                transaction.hide(mOneStarPlayFragment3);
+            }
+        }
+        if (mOneStarPlayFragment5 != null) {
+            transaction.hide(mOneStarPlayFragment5);
+        } else {
+            if (savedInstanceState != null) {
+                mOneStarPlayFragment5 = (OneStarPlayFragment) fManager.findFragmentByTag("OneStarPlayFragment5");
+                transaction.hide(mOneStarPlayFragment5);
+            }
+        }
+        if (mOneStarPlayFragment6 != null) {
+            transaction.hide(mOneStarPlayFragment6);
+        } else {
+            if (savedInstanceState != null) {
+                mOneStarPlayFragment6 = (OneStarPlayFragment) fManager.findFragmentByTag("OneStarPlayFragment6");
+                transaction.hide(mOneStarPlayFragment6);
             }
         }
         if (mTwoStarPlayFragment != null) {
@@ -379,12 +515,28 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
                 transaction.hide(mThreeStarPlayFragment);
             }
         }
-        if (mFiveStarPlayFragment != null) {
-            transaction.hide(mFiveStarPlayFragment);
+        if (mFiveStarPlayFragment7 != null) {
+            transaction.hide(mFiveStarPlayFragment7);
         } else {
             if (savedInstanceState != null) {
-                mFiveStarPlayFragment = (FiveStarPlayFragment) fManager.findFragmentByTag("FiveStarPlayFragment");
-                transaction.hide(mFiveStarPlayFragment);
+                mFiveStarPlayFragment7 = (FiveStarPlayFragment) fManager.findFragmentByTag("FiveStarPlayFragment7");
+                transaction.hide(mFiveStarPlayFragment7);
+            }
+        }
+        if (mFiveStarPlayFragment8 != null) {
+            transaction.hide(mFiveStarPlayFragment8);
+        } else {
+            if (savedInstanceState != null) {
+                mFiveStarPlayFragment8 = (FiveStarPlayFragment) fManager.findFragmentByTag("FiveStarPlayFragment8");
+                transaction.hide(mFiveStarPlayFragment8);
+            }
+        }
+        if (mBigStarPlayFragment != null) {
+            transaction.hide(mBigStarPlayFragment);
+        } else {
+            if (savedInstanceState != null) {
+                mBigStarPlayFragment = (BigStarPlayFragment) fManager.findFragmentByTag("BigStarPlayFragment");
+                transaction.hide(mBigStarPlayFragment);
             }
         }
     }
@@ -418,6 +570,8 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
     protected void onDestroy() {
         super.onDestroy();
         RxBus.getDefault().unDisposable(this);
+        if(mCountDownTimer!=null)
+            mCountDownTimer.cancel();
     }
 
     @Override
@@ -464,8 +618,13 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
                     Vibrator vibrator = (Vibrator) mActivity.getSystemService(mActivity.VIBRATOR_SERVICE);
                     vibrator.vibrate(500);
                     RandomNumber(mActivity.mGroup, mActivity.mNumber);
-                    RxBus.getDefault().post(new RxBusBean(RxBusType.Shake_Play, mActivity.mSparseArray));
-                    mActivity.isShake = false;
+                    RxBus.getDefault().post(new RxBusBean(RxBusType.Shake_Play, mActivity.mType, mActivity.mSparseArray));
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mActivity.isShake = false;
+                        }
+                    },1000);
                     break;
             }
         }
@@ -479,11 +638,14 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
         private void RandomNumber(int n, int m) {
             mActivity.mSparseArray.clear();
             for (int i = 0; i < n; i++) {
-                List<Integer> list = Arrays.asList(randomArray(0, 9, m));
-                mActivity.mSparseArray.put(i + 1, new ArrayList<>(list));
+                if (mActivity.mType == 9) {
+                    List<Integer> list = Arrays.asList(randomArray(0, 3, m));
+                    mActivity.mSparseArray.put(i + 1, new ArrayList<>(list));
+                } else {
+                    List<Integer> list = Arrays.asList(randomArray(0, 9, m));
+                    mActivity.mSparseArray.put(i + 1, new ArrayList<>(list));
+                }
             }
-
-
         }
 
         /**
@@ -528,9 +690,21 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        if (mOneStarPlayFragment != null
-                && mOneStarPlayFragment.isVisible()) {
-            getSupportFragmentManager().putFragment(savedInstanceState, "OneStarPlayFragment", mOneStarPlayFragment);
+        if (mOneStarPlayFragment1 != null
+                && mOneStarPlayFragment1.isVisible()) {
+            getSupportFragmentManager().putFragment(savedInstanceState, "OneStarPlayFragment1", mOneStarPlayFragment1);
+        }
+        if (mOneStarPlayFragment3 != null
+                && mOneStarPlayFragment3.isVisible()) {
+            getSupportFragmentManager().putFragment(savedInstanceState, "OneStarPlayFragment3", mOneStarPlayFragment3);
+        }
+        if (mOneStarPlayFragment5 != null
+                && mOneStarPlayFragment5.isVisible()) {
+            getSupportFragmentManager().putFragment(savedInstanceState, "OneStarPlayFragment5", mOneStarPlayFragment5);
+        }
+        if (mOneStarPlayFragment6 != null
+                && mOneStarPlayFragment6.isVisible()) {
+            getSupportFragmentManager().putFragment(savedInstanceState, "OneStarPlayFragment6", mOneStarPlayFragment6);
         }
         if (mTwoStarPlayFragment != null
                 && mTwoStarPlayFragment.isVisible()) {
@@ -541,9 +715,17 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
                 && mThreeStarPlayFragment.isVisible()) {
             getSupportFragmentManager().putFragment(savedInstanceState, "ThreeStarPlayFragment", mThreeStarPlayFragment);
         }
-        if (mFiveStarPlayFragment != null
-                && mFiveStarPlayFragment.isVisible()) {
-            getSupportFragmentManager().putFragment(savedInstanceState, "FiveStarPlayFragment", mFiveStarPlayFragment);
+        if (mFiveStarPlayFragment7 != null
+                && mFiveStarPlayFragment7.isVisible()) {
+            getSupportFragmentManager().putFragment(savedInstanceState, "FiveStarPlayFragment7", mFiveStarPlayFragment7);
+        }
+        if (mFiveStarPlayFragment8 != null
+                && mFiveStarPlayFragment8.isVisible()) {
+            getSupportFragmentManager().putFragment(savedInstanceState, "FiveStarPlayFragment8", mFiveStarPlayFragment8);
+        }
+        if (mBigStarPlayFragment != null
+                && mBigStarPlayFragment.isVisible()) {
+            getSupportFragmentManager().putFragment(savedInstanceState, "BigStarPlayFragment", mBigStarPlayFragment);
         }
     }
 
@@ -551,8 +733,22 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
      * 界面赋值
      */
     private void initIssueData() {
-        mThisIssue.setText("距" + mThisIssueContent + "期投注截止");
+        if (TextUtils.isEmpty(mThisIssueContent)) {
+            mStopIssue.setVisibility(View.VISIBLE);
+            mThisIssue.setVisibility(View.GONE);
+            mCountDown.setVisibility(View.GONE);
+            return;
+        }
+
+        String[] itemC = mThisIssueContent.split("-");
+        if (itemC.length >= 2) {
+            mThisIssue.setText("距" + itemC[1] + "期投注截止");
+        } else {
+            mThisIssue.setText("距000期投注截止");
+        }
         mCountDown.setText(TimeUtils.setSecond2Minute(mCountDownContent));
+        if(mCountDownTimer!=null)
+            mCountDownTimer.cancel();
         mCountDownTimer = new CountDownTimer(mCountDownContent * 1000, 1000) {
             @Override
             public void onTick(long l) {
@@ -566,22 +762,110 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
             }
         }.start();
     }
-
-
     /**-------------网络接口部分-----------------*/
     /**
      * 获取当前期号、倒计时
      */
     private void getThisIssueData() {
-        BusinessDao.GetCurrentIssue(new OnResultClick<CurrentIssueBean>() {
+        switch (PlayFlag) {
+            case PlayStateManger.CQSSC:
+                //重庆时时彩
+                BusinessDao.GetCurrentIssue(new OnResultClick<CurrentIssueBean>() {
+                    @Override
+                    public void success(BaseHttpBean<CurrentIssueBean> bean) {
+                        if (bean.getCode() == 0) {
+                            if (bean.getData() != null) {
+                                mThisIssueContent = bean.getData().getQihao();
+                                mCountDownContent = bean.getData().getCounttime();
+                                if (mCountDownContent >= 0)
+                                    initIssueData();
+                            }else {
+                                mThisIssueContent = "";
+                                mThisIssue.setText("获取期号失败");
+                            }
+                        } else {
+                            mThisIssueContent = "";
+                            initIssueData();
+
+                        }
+
+                    }
+
+                    @Override
+                    public void fail(Throwable throwable) {
+                        mThisIssue.setText("获取期号失败");
+                    }
+                });
+                break;
+            case PlayStateManger.XJSSC:
+                //新疆时时彩
+                BusinessDao.GetXJCurrentIssue(new OnResultClick<CurrentIssueBean>() {
+                    @Override
+                    public void success(BaseHttpBean<CurrentIssueBean> bean) {
+                        if (bean.getCode() == 0) {
+                            if (bean.getData() != null) {
+                                mThisIssueContent = bean.getData().getQihao();
+                                mCountDownContent = bean.getData().getCounttime();
+                                if (mCountDownContent >= 0)
+                                    initIssueData();
+                            }else {
+                                mThisIssueContent="";
+                                mThisIssue.setText("获取期号失败");
+                            }
+                        } else {
+                            mThisIssueContent = "";
+                            initIssueData();
+
+                        }
+                    }
+
+                    @Override
+                    public void fail(Throwable throwable) {
+                        mThisIssue.setText("获取期号失败");
+                    }
+                });
+                break;
+            case PlayStateManger.TJSSC:
+                //天津时时彩
+                BusinessDao.GetTJCurrentIssue(new OnResultClick<CurrentIssueBean>() {
+                    @Override
+                    public void success(BaseHttpBean<CurrentIssueBean> bean) {
+                        if (bean.getCode() == 0) {
+                            if (bean.getData() != null) {
+                                mThisIssueContent = bean.getData().getQihao();
+                                mCountDownContent = bean.getData().getCounttime();
+                                if (mCountDownContent >= 0)
+                                    initIssueData();
+                            }else {
+                                mThisIssueContent = "";
+                                mThisIssue.setText("获取期号失败");
+                            }
+                        } else {
+                            mThisIssueContent = "";
+                            initIssueData();
+
+                        }
+                    }
+
+                    @Override
+                    public void fail(Throwable throwable) {
+                        mThisIssue.setText("获取期号失败");
+                    }
+                });
+                break;
+        }
+
+    }
+
+    /**
+     * 获取遗漏号码
+     */
+    private void getLostNumber(){
+        BusinessDao.GetLostNumber(PlayFlag, new OnResultListClick<List<String>>() {
             @Override
-            public void success(BaseHttpBean<CurrentIssueBean> bean) {
-                if (bean.getData() != null) {
-                    mThisIssueContent = bean.getData().getQihao();
-                    mCountDownContent = bean.getData().getCounttime();
-                    if (mCountDownContent >= 0)
-                        initIssueData();
-                }
+            public void success(List<List<String>> list) {
+                mLostList=list;
+                RxBus.getDefault().post(new RxBusBean(RxBusType.LostNumber_Notice,list));
             }
 
             @Override
@@ -590,6 +874,5 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
             }
         });
     }
-
 
 }

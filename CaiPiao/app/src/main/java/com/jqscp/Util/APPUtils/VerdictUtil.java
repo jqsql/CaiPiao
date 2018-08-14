@@ -49,7 +49,9 @@ public class VerdictUtil {
 		String reg = "^[0-9]+(.[0-9]{1,2})?";
 		return startCheck(reg, cellPhoneNr);
 	}
-
+	public static boolean isPhone(String phone) {
+		return (phone.length()==11);
+	}
 	public static boolean isMobileValid(String cellPhoneNr) {
 		String reg = "^((13[0-9])|(14[0-9])|(15[^4,\\D])|(17[0-9])|(18[0-9]))\\d{8}$";
 		return startCheck(reg, cellPhoneNr);
@@ -58,16 +60,25 @@ public class VerdictUtil {
 		String reg = "^[\u4e00-\u9fa5]*$";
 		return startCheck(reg, NameNr);
 	}
+	public static boolean isNameValid2(String NameNr) {
+		String reg = "^[\u4e00-\u9fa5A-Za-z0-9]{2,5}";
+		return startCheck(reg, NameNr);
+	}
 	public static boolean isPasswordValid(String cellPhoneNr) {
 		String reg = "^(?!^\\d+$)(?!^[a-zA-Z]+$)(?!^[_*/~!@#￥%&*()<>+-]+$).{6,15}$";
 		return startCheck(reg, cellPhoneNr);
 	}
 
-	public static boolean isPayPassword(String payPassword) {
-		String reg = "\\d{6}";
+	public static boolean isPassword(String payPassword) {
+		//String reg = "^[A-Za-z_0-9]{6,15}";
+		String reg = "^(?!^\\d+$)(?!^[a-zA-Z]+$)(?!^[_*/~!@#￥%&*()<>+-]+$).{6,15}$";
 		return startCheck(reg, payPassword);
 	}
-	//字母和数字组合
+	public static boolean isPayPassword(String payPassword) {
+		String reg = "^[A-Za-z0-9]{6,15}";
+		return startCheck(reg, payPassword);
+	}
+	//字母和数字、下划线组合
 	public static boolean isPasswordValid_OnlyNumAndLeter(String passWord) {
 		String reg = "^[A-Za-z0-9]+$";
 		return startCheck(reg, passWord);
@@ -102,5 +113,41 @@ public class VerdictUtil {
 		NumberFormat nf = new DecimalFormat("#,###");
 		String str = nf.format(number);
 		return str;
+	}
+
+	/**
+	 * 校验银行卡卡号
+	 * @param cardId
+	 * @return
+	 */
+	public static boolean checkBankCard(String cardId) {
+		char bit = getBankCardCheckCode(cardId.substring(0, cardId.length() - 1));
+		if(bit == 'N'){
+			return false;
+		}
+		return cardId.charAt(cardId.length() - 1) == bit;
+	}
+	/**
+	 * 从不含校验位的银行卡卡号采用 Luhm 校验算法获得校验位
+	 * @param nonCheckCodeCardId
+	 * @return
+	 */
+	public static char getBankCardCheckCode(String nonCheckCodeCardId){
+		if(nonCheckCodeCardId == null || nonCheckCodeCardId.trim().length() == 0
+				|| !nonCheckCodeCardId.matches("\\d+")) {
+			//如果传的不是数据返回N
+			return 'N';
+		}
+		char[] chs = nonCheckCodeCardId.trim().toCharArray();
+		int luhmSum = 0;
+		for(int i = chs.length - 1, j = 0; i >= 0; i--, j++) {
+			int k = chs[i] - '0';
+			if(j % 2 == 0) {
+				k *= 2;
+				k = k / 10 + k % 10;
+			}
+			luhmSum += k;
+		}
+		return (luhmSum % 10 == 0) ? '0' : (char)((10 - luhmSum % 10) + '0');
 	}
 }

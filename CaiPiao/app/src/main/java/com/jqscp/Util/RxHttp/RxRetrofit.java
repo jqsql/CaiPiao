@@ -20,7 +20,7 @@ public class RxRetrofit {
     private static RxRetrofit mRxRetrofit;
     private Retrofit mRetrofit;
     //服务器地址
-    private  static  String path= MyApplication.ServerPath;
+    private  static  String path= "http://code.310liao.com/";
 
     /**
      * 网络请求初始化配置

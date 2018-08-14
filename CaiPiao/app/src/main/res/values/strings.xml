@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">CaiPiao</string>
+    <string name="suggestion_str">尊敬的用户您好:\n请在下方对话框输入您关于产品的反馈内容，产品经理将在2个工作日内回复您，如果有其它问题，请联系客服或拨打联系热线。</string>
 
     <string name="Myriabit">万位</string>
     <string name="Kilobit">千位</string>
     <string name="Hundreds">百位</string>
     <string name="Decade">十位</string>
     <string name="Units">个位</string>
+
+    <string name="withdraw_hint" formatted="false">1.每个账户每天最多提现3次，提现金额至少10元\n2.红包不可提现，中奖金额可全部提现\n3.非活动充值，充值15日后可申请提现（充值金额的70%）</string>
 </resources>

@@ -7,17 +7,31 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/APPFBackGround</item>
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
     </style>
 
-    <!--启动页主题-->
-    <style name="BootPageTheme" parent="AppTheme">
-        <item name="android:background">@drawable/boot_page</item>
+
+    <!--第一个表示新的activity创建进入效果，第2个表示activity还没有finish()下退出效果，
+   第3个表示上一个 activity返回进入效果，第4个表示的是activity finish()之后退出效果-->
+    <style name="AnimationActivity" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
     </style>
-    <style name="Text_ww_Commmon_Black">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+    <!--启动页主题<item name="android:background">@drawable/boot_page</item>-->
+    <style name="BootPageTheme" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+    <!--TabLayout字体大小属性-->
+    <style name="MyTabLayoutTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textSize">@dimen/text_16dp</item>
-        <item name="android:textColor">@color/White</item>
+    </style>
+    <!--Checkbox_Style-->
+    <style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkbox_style</item>
     </style>
     <!--缩放动画-->
     <style name="Scale_Animal_PopupWindow">
@@ -34,17 +48,40 @@
         <item name="android:windowExitAnimation">@anim/popwindow_hidden</item>
     </style>
 
-
+    <style name="Text_ww_Commmon_Black">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_16dp</item>
+        <item name="android:textColor">@color/White</item>
+    </style>
     <style name="Text_WW_Black">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/text_12dp</item>
         <item name="android:textColor">@color/TextBlack</item>
     </style>
+    <style name="Text_WW_TBlack">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_14dp</item>
+        <item name="android:textColor">@color/TitleBlack</item>
+    </style>
+    <style name="Text_WW_RBlack">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_14dp</item>
+        <item name="android:textColor">@color/Black</item>
+    </style>
     <style name="Text_WW_AppColor">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/text_12dp</item>
         <item name="android:textColor">@color/AppColor</item>
+    </style>
+    <style name="Text_WW_HintGreyColor">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_12dp</item>
+        <item name="android:textColor">@color/HintGreyColor</item>
     </style>
 </resources>

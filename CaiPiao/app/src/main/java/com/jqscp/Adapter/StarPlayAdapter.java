@@ -1,12 +1,15 @@
 package com.jqscp.Adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
+import com.jqscp.Bean.NumberPlayBean;
 import com.jqscp.R;
 import com.jqscp.View.CircleBGTextView;
 
@@ -18,24 +21,23 @@ import java.util.List;
  */
 
 public class StarPlayAdapter extends BaseAdapter{
-    private StarPlayAdapter mAdapter;
     private Context mContext;
-    private List<Integer> mList;
-    private SparseArray<List<Integer>> mCheckedList=new SparseArray<>();//选中的集合
+    private List<NumberPlayBean> mList;
+    private List<Integer> mCheckedList=new ArrayList<>();//选中的集合
     private LayoutInflater mInflater;
     private OnChangeDataListen mChangeDataListen;
     private int type=1;//万位：5，千位：4，百位：3，十位：2，个位：1
     public interface OnChangeDataListen{
-        void onChange(SparseArray<List<Integer>> checkedList);
+        void onChange(List<Integer> checkedList,int types);
     }
 
     public void setOnChangeDataListen(OnChangeDataListen changeDataListen) {
         mChangeDataListen = changeDataListen;
     }
 
-    public StarPlayAdapter(Context context, SparseArray<List<Integer>> list,int type) {
+    public StarPlayAdapter(Context context, List<NumberPlayBean> list, int type) {
         mContext = context;
-        mList = list.get(type);
+        mList = list;
         this.type = type;
         mInflater=LayoutInflater.from(mContext);
     }
@@ -63,13 +65,21 @@ public class StarPlayAdapter extends BaseAdapter{
             mViewHolder=new viewHolder();
             view= mInflater.inflate(R.layout.circle_bg_item,null);
             mViewHolder.mTextView=view.findViewById(R.id.Select_Number);
+            mViewHolder.mLostText=view.findViewById(R.id.Forget_Number);
             view.setTag(mViewHolder);
         }else {
             mViewHolder= (viewHolder) view.getTag();
         }
-        final int bean=mList.get(i);
-        mViewHolder.mTextView.setText(bean+"");
-        if(mCheckedList.get(type)!=null && mCheckedList.get(type).contains(bean)){
+        NumberPlayBean bean=mList.get(i);
+        final int number=bean.getNumber();
+        String lostNumber=bean.getLostNumber();
+        mViewHolder.mTextView.setText(number+"");
+        if(TextUtils.isEmpty(lostNumber)){
+            mViewHolder.mLostText.setText("-");
+        }else {
+            mViewHolder.mLostText.setText(lostNumber);
+        }
+        if(mCheckedList!=null && mCheckedList.contains(number)){
             mViewHolder.mTextView.setFillColor(true);
         }else {
             mViewHolder.mTextView.setFillColor(false);
@@ -77,31 +87,27 @@ public class StarPlayAdapter extends BaseAdapter{
         mViewHolder.mTextView.setOnViewClickListen(new CircleBGTextView.OnViewClickListen() {
             @Override
             public void onClick(boolean isFillColor) {
+                if(mCheckedList==null)
+                    return;
                 if(isFillColor){
-                    if(mCheckedList.get(type)==null)
-                        mCheckedList.put(type,new ArrayList<Integer>());
-                    mCheckedList.get(type).add(bean);
+                    mCheckedList.add(number);
                 }else {
-                    if(mCheckedList.get(type)==null)
-                        mCheckedList.put(type,new ArrayList<Integer>());
-                    mCheckedList.get(type).remove((Object)bean);
+                    mCheckedList.remove((Object)number);
                 }
-                mChangeDataListen.onChange(mCheckedList);
+                mChangeDataListen.onChange(mCheckedList,type);
             }
         });
         return view;
     }
     class viewHolder{
         CircleBGTextView mTextView;
+        TextView mLostText;
     }
 
 
-    public SparseArray<List<Integer>> getCheckedList() {
-        return mCheckedList;
-    }
-
-    public void setCheckedList(SparseArray<List<Integer>> checkedList) {
-        mCheckedList= checkedList==null ? new SparseArray<List<Integer>>() : checkedList;
+    public void setCheckedList(List<Integer> checkedList) {
+        mCheckedList= checkedList==null ? new ArrayList<Integer>() : checkedList;
+        //mChangeDataListen.onChange(mCheckedList,type);
         notifyDataSetChanged();
     }
 }

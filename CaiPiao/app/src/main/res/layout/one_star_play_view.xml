@@ -2,54 +2,111 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-    <RelativeLayout
-        android:id="@+id/Five_Star_View_Bottom"
+    <LinearLayout
+        android:id="@+id/Stars_Play_BottomLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/layout_white_top1"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:background="@color/White">
+        <LinearLayout
+            android:id="@+id/Stars_Play_Delete"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/delete"/>
+            <TextView
+                style="@style/Text_WW_HintGreyColor"
+                android:layout_marginTop="3dp"
+                android:text="清空"/>
+        </LinearLayout>
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:background="@color/BorderColor"/>
+        <LinearLayout
+            android:id="@+id/Stars_Play_SharkIt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/shark_it"/>
+            <TextView
+                style="@style/Text_WW_HintGreyColor"
+                android:layout_marginTop="3dp"
+                android:text="机选"/>
+        </LinearLayout>
         <TextView
-            android:id="@+id/Five_Star_View_BottomText"
-            style="@style/Text_ww_Commmon_Black"
-            android:layout_centerInParent="true"
-            android:text="共 0 注, 0 元"/>
-    </RelativeLayout>
+            android:id="@+id/Stars_Play_SubmitContent"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="left|center_vertical"
+            android:maxLines="1"
+            android:textColor="@color/TextBlack"
+            android:textSize="@dimen/text_12dp"
+            android:textColorHint="@color/HintTextColor"
+            android:hint="摇一下,机选一注"
+            />
+        <Button
+            android:id="@+id/Stars_Play_SubmitBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            style="?attr/borderlessButtonStyle"
+            android:background="@drawable/shape_app_4"
+            android:layout_marginRight="@dimen/app_padding_size"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/White"
+            android:textSize="@dimen/text_14dp"
+            android:text="提交"/>
+    </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:layout_above="@id/Five_Star_View_Bottom"
-        >
+        android:layout_above="@id/Stars_Play_BottomLayout"
+        android:scrollbars="none">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
-            <LinearLayout
+
+            <TextView
+                android:id="@+id/OneStar_1"
+                style="@style/Text_ww_Commmon_Black"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/play_number_bg"
+                android:paddingBottom="6dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="6dp"
+                android:text="@string/Units"
+                />
+
+            <com.jqscp.View.MyGrideview
+                android:id="@+id/GridView01"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
-                <TextView
-                    style="@style/Text_ww_Commmon_Black"
-                    android:paddingLeft="20dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:paddingRight="20dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/play_number_bg"
-                    android:text="@string/Units"
-                    />
-                <com.jqscp.View.MyGrideview
-                    android:id="@+id/GridView01"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:numColumns="auto_fit"
-                    android:columnWidth="45dp"
-                    android:listSelector="@android:color/transparent"
-                    />
-            </LinearLayout>
+
+                android:listSelector="@android:color/transparent"
+                android:numColumns="6"
+                />
         </LinearLayout>
-
     </ScrollView>
-
 </RelativeLayout>

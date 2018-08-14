@@ -4,7 +4,7 @@
               android:layout_height="wrap_content"
               android:layout_marginLeft="@dimen/app_padding_size"
               android:layout_marginRight="@dimen/app_padding_size"
-              android:background="@color/APPFBackGround"
+              android:background="@color/White"
               android:padding="10dp"
               android:orientation="vertical">
 
@@ -21,7 +21,7 @@
             android:gravity="center"
             android:padding="6dp"
             android:layout_marginRight="10dp"
-            android:text="一星直选"
+            android:text="一星复式"
             android:textColor="@color/TextBlack"
             android:textSize="@dimen/text_14dp"/>
 
@@ -33,7 +33,7 @@
             android:background="@drawable/layout_white_border_1"
             android:gravity="center"
             android:layout_marginRight="10dp"
-            android:text="二星直选"
+            android:text="二星复式"
             android:textColor="@color/TextBlack"
             android:textSize="@dimen/text_14dp"/>
 
@@ -62,7 +62,7 @@
             android:gravity="center"
             android:padding="6dp"
             android:layout_marginRight="10dp"
-            android:text="三星直选"
+            android:text="三星复式"
             android:textColor="@color/TextBlack"
             android:textSize="@dimen/text_14dp"/>
 
@@ -74,7 +74,7 @@
             android:background="@drawable/layout_white_border_1"
             android:gravity="center"
             android:layout_marginRight="10dp"
-            android:text="三星组三单式"
+            android:text="三星组三"
             android:textColor="@color/TextBlack"
             android:textSize="@dimen/text_14dp"/>
 
@@ -85,7 +85,7 @@
             android:layout_weight="1"
             android:background="@drawable/layout_white_border_1"
             android:gravity="center"
-            android:text="三星组三复式"
+            android:text="三星组六"
             android:textColor="@color/TextBlack"
             android:textSize="@dimen/text_14dp"/>
     </LinearLayout>
@@ -95,7 +95,7 @@
         android:layout_marginTop="10dp">
 
         <TextView
-            android:id="@+id/CQPlay_34"
+            android:id="@+id/CQPlay_51"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -103,19 +103,7 @@
             android:gravity="center"
             android:padding="6dp"
             android:layout_marginRight="10dp"
-            android:text="三星组六"
-            android:textColor="@color/TextBlack"
-            android:textSize="@dimen/text_14dp"/>
-
-        <TextView
-            android:id="@+id/CQPlay_51"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/layout_white_border_1"
-            android:gravity="center"
-            android:layout_marginRight="10dp"
-            android:text="五星直选"
+            android:text="五星复式"
             android:textColor="@color/TextBlack"
             android:textSize="@dimen/text_14dp"/>
 
@@ -126,36 +114,20 @@
             android:layout_weight="1"
             android:background="@drawable/layout_white_border_1"
             android:gravity="center"
+            android:layout_marginRight="10dp"
             android:text="五星通选"
             android:textColor="@color/TextBlack"
             android:textSize="@dimen/text_14dp"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/CQPlay_big"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/layout_white_border_1"
             android:gravity="center"
-            android:padding="6dp"
-            android:layout_marginRight="10dp"
             android:text="大小单双"
             android:textColor="@color/TextBlack"
             android:textSize="@dimen/text_14dp"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
     </LinearLayout>
 </LinearLayout>

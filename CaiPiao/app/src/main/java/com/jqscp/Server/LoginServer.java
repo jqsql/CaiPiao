@@ -24,4 +24,8 @@ public interface LoginServer {
     @FormUrlEncoded
     @POST("api/appuser/v1/login")
     Flowable<BaseHttpBean<RegisterBean>> Login(@Field("mobile") String mobile, @Field("password") String password);
+    //忘记密码
+    @FormUrlEncoded
+    @POST("api/appuser/v1/forgetpasswd")
+    Flowable<BaseHttpBean> ForgetPwd(@Field("account") String account, @Field("password") String password, @Field("code") String code);
 }

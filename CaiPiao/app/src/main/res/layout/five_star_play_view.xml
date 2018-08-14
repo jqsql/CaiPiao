@@ -1,50 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <RelativeLayout
-        android:id="@+id/Five_Star_View_Bottom"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:id="@+id/Stars_Play_BottomLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/layout_white_top1"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:background="@color/White"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/Stars_Play_Delete"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/delete"/>
+
+            <TextView
+                style="@style/Text_WW_HintGreyColor"
+                android:layout_marginTop="3dp"
+                android:text="清空"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="3dp"
+            android:background="@color/BorderColor"/>
+
+        <LinearLayout
+            android:id="@+id/Stars_Play_SharkIt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/shark_it"/>
+
+            <TextView
+                style="@style/Text_WW_HintGreyColor"
+                android:layout_marginTop="3dp"
+                android:text="机选"/>
+        </LinearLayout>
+
         <TextView
-            android:id="@+id/Five_Star_View_BottomText"
-            style="@style/Text_ww_Commmon_Black"
-            android:layout_centerInParent="true"
-            android:text="共 0 注, 0 元"/>
-    </RelativeLayout>
+            android:id="@+id/Stars_Play_SubmitContent"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="left|center_vertical"
+            android:hint="摇一下,机选一注"
+            android:maxLines="1"
+            android:textColor="@color/TextBlack"
+            android:textColorHint="@color/HintTextColor"
+            android:textSize="@dimen/text_12dp"
+            />
+
+        <Button
+            android:id="@+id/Stars_Play_SubmitBtn"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="@dimen/app_padding_size"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1.5"
+            android:background="@drawable/shape_app_4"
+            android:text="提交"
+            android:textColor="@color/White"
+            android:textSize="@dimen/text_14dp"/>
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:layout_above="@id/Five_Star_View_Bottom"
-        >
+        android:layout_above="@id/Stars_Play_BottomLayout"
+        android:scrollbars="none">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
+
                 <TextView
                     style="@style/Text_ww_Commmon_Black"
-                    android:paddingLeft="20dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:paddingRight="20dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/play_number_bg"
+                    android:paddingBottom="6dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="6dp"
                     android:text="@string/Myriabit"
                     />
+
                 <com.jqscp.View.MyGrideview
                     android:id="@+id/GridView01"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:numColumns="auto_fit"
-                    android:columnWidth="45dp"
                     android:listSelector="@android:color/transparent"
+                    android:numColumns="6"
                     />
             </LinearLayout>
 
@@ -52,96 +126,101 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
+
                 <TextView
                     style="@style/Text_ww_Commmon_Black"
-                    android:paddingLeft="20dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:paddingRight="20dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/play_number_bg"
+                    android:paddingBottom="6dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="6dp"
                     android:text="@string/Kilobit"
                     />
+
                 <com.jqscp.View.MyGrideview
                     android:id="@+id/GridView02"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:numColumns="auto_fit"
-                    android:columnWidth="45dp"
                     android:listSelector="@android:color/transparent"
+                    android:numColumns="6"
                     />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
+
                 <TextView
                     style="@style/Text_ww_Commmon_Black"
-                    android:paddingLeft="20dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:paddingRight="20dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/play_number_bg"
+                    android:paddingBottom="6dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="6dp"
                     android:text="@string/Hundreds"
                     />
+
                 <com.jqscp.View.MyGrideview
                     android:id="@+id/GridView03"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:numColumns="auto_fit"
-                    android:columnWidth="45dp"
                     android:listSelector="@android:color/transparent"
+                    android:numColumns="6"
                     />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
+
                 <TextView
                     style="@style/Text_ww_Commmon_Black"
-                    android:paddingLeft="20dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:paddingRight="20dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/play_number_bg"
+                    android:paddingBottom="6dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="6dp"
                     android:text="@string/Decade"
                     />
+
                 <com.jqscp.View.MyGrideview
                     android:id="@+id/GridView04"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:numColumns="auto_fit"
-                    android:columnWidth="45dp"
                     android:listSelector="@android:color/transparent"
+                    android:numColumns="6"
                     />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
+
                 <TextView
                     style="@style/Text_ww_Commmon_Black"
-                    android:paddingLeft="20dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:paddingRight="20dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/play_number_bg"
+                    android:paddingBottom="6dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="6dp"
                     android:text="@string/Units"
                     />
+
                 <com.jqscp.View.MyGrideview
                     android:id="@+id/GridView05"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:numColumns="auto_fit"
-                    android:columnWidth="45dp"
                     android:listSelector="@android:color/transparent"
+                    android:numColumns="6"
                     />
             </LinearLayout>
         </LinearLayout>
-
     </ScrollView>
-
 </RelativeLayout>

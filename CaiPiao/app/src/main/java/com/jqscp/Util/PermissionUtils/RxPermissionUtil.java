@@ -54,9 +54,18 @@ public class RxPermissionUtil {
                 .subscribe(consumer);
     }
     /**
-     * 获取手机读写权限
+     * 获取手机读写权限/获取向SD卡中创建或者删除的权限
      */
     public void getWritePermiss(Consumer<Boolean> consumer){
+        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS)
+                .subscribe(consumer);
+    }
+    /**
+     * 获取手机读写权限/获取向SD卡中创建
+     */
+    public void getWriteReadPermiss(Consumer<Boolean> consumer){
         rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 .subscribe(consumer);

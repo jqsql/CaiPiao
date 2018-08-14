@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jqscp.R;
+import com.jqscp.Util.APPUtils.ALog;
 import com.jqscp.Util.APPUtils.DisplayUtil;
 import com.jqscp.Util.APPUtils.ImageLoader;
 
@@ -335,7 +336,7 @@ public class ImageCycleView extends LinearLayout {
 			if (isLocalDrawable) {
 				imageView.setImageResource(Integer.parseInt(imageUrl));
 			}else {
-				ImageLoader.getInstance(mContext).setImages(imageView,imageUrl);
+				ImageLoader.getInstance(mContext,false).setImages(imageView,imageUrl);
 			}
 			
 			return imageView;
