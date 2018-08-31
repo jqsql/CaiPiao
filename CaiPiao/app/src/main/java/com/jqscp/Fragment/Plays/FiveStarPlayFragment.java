@@ -173,6 +173,13 @@ public class FiveStarPlayFragment extends BaseFragment {
                 setData();
             }
         });
+        //机选
+        mSharkIt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RxBus.getDefault().post(new RxBusBean(RxBusType.ToShake));
+            }
+        });
         //清空
         mDelete.setOnClickListener(new View.OnClickListener() {
             @Override

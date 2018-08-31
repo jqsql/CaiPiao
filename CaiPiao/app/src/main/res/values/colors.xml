@@ -5,13 +5,13 @@
     <color name="colorAccent">#FF4081</color>
 
     <!--APP状态栏颜色-->
-    <color name="APPStartBarColor">#E83737</color>
+    <color name="APPStartBarColor">#E12F2F</color>
     <!--APP主背景颜色-->
     <color name="APPFBackGround">#F0F0F0</color>
     <!--APP次背景颜色-->
     <color name="APPSBackGround">#000000</color>
     <!--APP主题颜色-->
-    <color name="AppColor">#E83737</color>
+    <color name="AppColor">#E12F2F</color>
 
     <color name="Black">#000000</color>
     <color name="White">#ffffff</color>

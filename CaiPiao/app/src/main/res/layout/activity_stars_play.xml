@@ -18,7 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/Stars_Play_TopBarLayout"
-        android:background="@color/White">
+        android:background="@color/White"
+        android:gravity="center_vertical">
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -60,97 +61,139 @@
         <RelativeLayout
             android:id="@+id/Stars_Play_HistoryLottery"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="10dp">
             <TextView
+                android:id="@+id/Lottery_Item_Text"
                 style="@style/Text_WW_Black"
                 android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:textSize="@dimen/text_14dp"
+                android:textSize="@dimen/text_12dp"
                 android:text="历史开奖结果"/>
+            <LinearLayout
+                android:id="@+id/Lottery_Item_NumberLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Lottery_Item_Text"
+                android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+                <com.jqscp.View.CircleBGTextView
+                    android:id="@+id/MainLottery_Item_Item_Number01"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="3dp"
+                    android:textSize="8dp"
+                    app:isFillColor="true"/>
+                <com.jqscp.View.CircleBGTextView
+                    android:id="@+id/MainLottery_Item_Item_Number02"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="3dp"
+                    android:textSize="8dp"
+                    app:isFillColor="true"/>
+                <com.jqscp.View.CircleBGTextView
+                    android:id="@+id/MainLottery_Item_Item_Number03"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="3dp"
+                    android:textSize="8dp"
+                    app:isFillColor="true"/>
+                <com.jqscp.View.CircleBGTextView
+                    android:id="@+id/MainLottery_Item_Item_Number04"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="3dp"
+                    android:textSize="8dp"
+                    app:isFillColor="true"/>
+                <com.jqscp.View.CircleBGTextView
+                    android:id="@+id/MainLottery_Item_Item_Number05"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:textSize="8dp"
+                    app:isFillColor="true"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/Lottery_Item_NumberBottomLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Lottery_Item_NumberLayout"
+                android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal"
+                android:visibility="gone">
+                <com.jqscp.View.CircleBGTextView
+                    android:id="@+id/MainLottery_Item_Item_Number06"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="3dp"
+                    android:textSize="8dp"
+                    app:isFillColor="true"/>
+                <com.jqscp.View.CircleBGTextView
+                    android:id="@+id/MainLottery_Item_Item_Number07"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="3dp"
+                    android:textSize="8dp"
+                    app:isFillColor="true"/>
+                <com.jqscp.View.CircleBGTextView
+                    android:id="@+id/MainLottery_Item_Item_Number08"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="3dp"
+                    android:textSize="8dp"
+                    app:isFillColor="true"/>
+                <com.jqscp.View.CircleBGTextView
+                    android:id="@+id/MainLottery_Item_Item_Number09"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="3dp"
+                    android:textSize="8dp"
+                    app:isFillColor="true"/>
+                <com.jqscp.View.CircleBGTextView
+                    android:id="@+id/MainLottery_Item_Item_Number10"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:textSize="8dp"
+                    app:isFillColor="true"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/Lottery_Item_Number2Layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Lottery_Item_Text"
+                android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal"
+                android:visibility="gone">
+                <ImageView
+                    android:id="@+id/MainLottery_Item_Item_Icon01"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="3dp"
+                    android:scaleType="fitXY"/>
+                <ImageView
+                    android:id="@+id/MainLottery_Item_Item_Icon02"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="3dp"
+                    android:scaleType="fitXY"/>
+                <ImageView
+                    android:id="@+id/MainLottery_Item_Item_Icon03"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="3dp"
+                    android:scaleType="fitXY"/>
+            </LinearLayout>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/app_padding_size"
                 android:src="@drawable/goto_icon"/>
         </RelativeLayout>
     </LinearLayout>
 
-    <!--<LinearLayout
-        android:id="@+id/Stars_Play_BottomLayout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:background="@color/White">
-        <LinearLayout
-            android:id="@+id/Stars_Play_Delete"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/delete"/>
-            <TextView
-                style="@style/Text_WW_HintGreyColor"
-                android:layout_marginTop="3dp"
-                android:text="清空"/>
-        </LinearLayout>
-        <View
-            android:layout_width="0.5dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:background="@color/BorderColor"/>
-        <LinearLayout
-            android:id="@+id/Stars_Play_SharkIt"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/shark_it"/>
-            <TextView
-                style="@style/Text_WW_HintGreyColor"
-                android:layout_marginTop="3dp"
-                android:text="机选"/>
-        </LinearLayout>
-        <TextView
-            android:id="@+id/Stars_Play_SubmitContent"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:gravity="left|center_vertical"
-            android:maxLines="1"
-            android:textColor="@color/TextBlack"
-            android:textSize="@dimen/text_12dp"
-            android:textColorHint="@color/HintTextColor"
-            android:hint="摇一下,机选一注"
-            />
-        <Button
-            android:id="@+id/Stars_Play_SubmitBtn"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.5"
-            style="?attr/borderlessButtonStyle"
-            android:background="@drawable/shape_app_4"
-            android:layout_marginRight="@dimen/app_padding_size"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:textColor="@color/White"
-            android:textSize="@dimen/text_14dp"
-            android:text="提交"/>
-    </LinearLayout>-->
     <FrameLayout
         android:id="@+id/Stars_Play_FrameLayout"
         android:layout_width="match_parent"

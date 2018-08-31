@@ -15,4 +15,9 @@
         <attr name="itemHaveGoto" format="boolean"/>
         <attr name="itemValueColor" format="color"/>
     </declare-styleable>
+
+    <declare-styleable name="AddTextLayout">
+        <attr name="values" format="integer"/>
+        <attr name="maxValues" format="integer"/>
+    </declare-styleable>
 </resources>

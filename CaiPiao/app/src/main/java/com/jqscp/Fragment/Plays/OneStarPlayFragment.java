@@ -182,6 +182,13 @@ public class OneStarPlayFragment extends BaseFragment {
                 }
             }
         });
+        //机选
+        mSharkIt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RxBus.getDefault().post(new RxBusBean(RxBusType.ToShake));
+            }
+        });
 
         RxBus.getDefault().doSubscribeMain(getActivity(), RxBusBean.class, new Consumer<RxBusBean>() {
             @Override

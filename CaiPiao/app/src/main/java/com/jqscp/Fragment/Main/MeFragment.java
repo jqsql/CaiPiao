@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import com.jqscp.Bean.BaseHttpBean;
 import com.jqscp.Bean.RxBusBean;
 import com.jqscp.Bean.UserInfo;
 import com.jqscp.ConfigConsts;
+import com.jqscp.Dao.InfoDao;
 import com.jqscp.Dao.OnResultClick;
 import com.jqscp.Dao.UserDao;
 import com.jqscp.MyApplication;
@@ -33,6 +35,7 @@ import com.jqscp.R;
 import com.jqscp.Util.APPUtils.ALog;
 import com.jqscp.Util.APPUtils.DisplayUtil;
 import com.jqscp.Util.APPUtils.Sharedpreferences_Utils;
+import com.jqscp.Util.APPUtils.ToastUtils;
 import com.jqscp.Util.BaseActivityUtils.BaseFragment;
 import com.jqscp.Util.RxJavaUtils.RxBus;
 import com.jqscp.Util.RxJavaUtils.RxBusType;
@@ -55,6 +58,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     private TextView mAccountMoney;//账户余额
     private TextView mCanUseMoney;//可用余额
     private ImageView mNotice;//通知
+    private ImageView mKeFu;//客服
     private Button mOutMoney;//提款
     private Button mInMoney;//充值
 
@@ -91,6 +95,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         mAccountMoney = mView.findViewById(R.id.Main_Me_HaveAccount);
         mCanUseMoney = mView.findViewById(R.id.Main_Me_CanUseMoney);
         mNotice = mView.findViewById(R.id.Main_Me_News);
+        mKeFu = mView.findViewById(R.id.Main_Me_Service);
 
         mTopBarLayout = mView.findViewById(R.id.Main_Me_TopLayout);
         if (mMainActivity.isSuccessStatusBar) {
@@ -152,6 +157,16 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 getUserMessage();
             }
         });
+
+        //客服
+        mKeFu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //防止连续点击
+                mKeFu.setEnabled(false);
+                getKeFu();
+            }
+        });
     }
 
     @Override
@@ -185,7 +200,6 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                     Bundle bundle = new Bundle();
                     bundle.putString("Url", "http://code.310liao.com/api/appuser/v1/index?token=" + ConfigConsts.ServerToken);
                     bundle.putString("Title", "充值");
-                    ALog.e("http://code.310liao.com/api/appuser/v1/index?token=" + ConfigConsts.ServerToken);
                     _this.startActivityAndBundle(WebShowActivity.class, bundle);
                 } else {
                     _this.startActivity(LoginActivity.class);
@@ -301,4 +315,31 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             }
         });
     }
+
+    private void getKeFu(){
+        InfoDao.GetKeFu(new OnResultClick<String>() {
+            @Override
+            public void success(BaseHttpBean<String> bean) {
+                mKeFu.setEnabled(true);
+                if(bean!=null) {
+                    if (bean.getCode() == 0) {
+                        String url = bean.getData();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("Url", url);
+                        bundle.putString("Title", "客服");
+                        _this.startActivityAndBundle(WebShowActivity.class, bundle);
+                    } else {
+                        ToastUtils.showShort(_this, bean.getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void fail(Throwable throwable) {
+                mKeFu.setEnabled(true);
+                ToastUtils.showShort(_this, "网络异常");
+            }
+        });
+    }
+
 }

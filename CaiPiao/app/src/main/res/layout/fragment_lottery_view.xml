@@ -17,6 +17,7 @@
             android:id="@+id/Main_Lottery_Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:text="开奖信息"
             android:textColor="@color/White"
             android:textSize="@dimen/app_title_size"/>

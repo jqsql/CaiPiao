@@ -13,9 +13,9 @@
     <dimen name="main_me_btn_width">50dp</dimen>
     <dimen name="main_me_btn_height">30dp</dimen>
     <dimen name="text_10dp">8dp</dimen>
-    <dimen name="text_12dp">10dp</dimen>
-    <dimen name="text_14dp">12dp</dimen>
-    <dimen name="text_16dp">14dp</dimen>
+    <dimen name="text_12dp">12dp</dimen>
+    <dimen name="text_14dp">14dp</dimen>
+    <dimen name="text_16dp">15dp</dimen>
     <dimen name="text_18dp">16dp</dimen>
     <dimen name="text_20dp">18dp</dimen>
 </resources>

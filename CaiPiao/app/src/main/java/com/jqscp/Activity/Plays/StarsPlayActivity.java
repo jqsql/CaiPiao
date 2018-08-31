@@ -20,8 +20,10 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jqscp.Activity.WebShowActivity;
 import com.jqscp.Bean.BaseHttpBean;
 import com.jqscp.Bean.CurrentIssueBean;
+import com.jqscp.Bean.LotteryBean;
 import com.jqscp.Bean.RxBusBean;
 import com.jqscp.Dao.BusinessDao;
 import com.jqscp.Dao.OnResultClick;
@@ -37,6 +39,7 @@ import com.jqscp.Util.BaseActivityUtils.BaseActivity;
 import com.jqscp.Util.RxJavaUtils.RxBus;
 import com.jqscp.Util.RxJavaUtils.RxBusType;
 import com.jqscp.View.CQPlay_PopupWindow;
+import com.jqscp.View.CircleBGTextView;
 import com.jqscp.View.HistoryPopupWindow;
 import com.jqscp.View.SerializableSparseArray;
 
@@ -46,6 +49,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+
+import io.reactivex.functions.Consumer;
 
 public class StarsPlayActivity extends BaseActivity implements SensorEventListener {
     private static final int BeginShake = 1000;
@@ -67,6 +72,15 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
     private ThreeStarPlayFragment mThreeStarPlayFragment;
     private FiveStarPlayFragment mFiveStarPlayFragment7, mFiveStarPlayFragment8;
     private BigStarPlayFragment mBigStarPlayFragment;
+
+    //开奖号部分
+    private LinearLayout mLayout01;
+    private CircleBGTextView mCircle01;
+    private CircleBGTextView mCircle02;
+    private CircleBGTextView mCircle03;
+    private CircleBGTextView mCircle04;
+    private CircleBGTextView mCircle05;
+    private LotteryBean mLotteryBean;
 
     private CQPlay_PopupWindow mCQPlayPopupWindow;
     //开启摇一摇
@@ -91,6 +105,7 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
     private int mCountDownContent;//倒计时
 
     private int PlayFlag;//0：重庆时时彩、1：新疆时时彩、2：天津时时彩
+    private boolean IsMake;//是否是修改
 
 
     @Override
@@ -103,6 +118,7 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
         initListen();
         getThisIssueData();
         getLostNumber();
+        getLotteryList();
     }
 
     private void initView() {
@@ -116,6 +132,13 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
         mCountDown = findViewById(R.id.Stars_Play_CountDown);
         mHistoryLottery = findViewById(R.id.Stars_Play_HistoryLottery);
 
+        mLayout01 = findViewById(R.id.Lottery_Item_NumberLayout);
+        mCircle01 = findViewById(R.id.MainLottery_Item_Item_Number01);
+        mCircle02 = findViewById(R.id.MainLottery_Item_Item_Number02);
+        mCircle03 = findViewById(R.id.MainLottery_Item_Item_Number03);
+        mCircle04 = findViewById(R.id.MainLottery_Item_Item_Number04);
+        mCircle05 = findViewById(R.id.MainLottery_Item_Item_Number05);
+
         fManager = getSupportFragmentManager();
         mHandler = new MyHandler(this);
     }
@@ -128,11 +151,15 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
             mMakeType = bundles.getInt("Type",1);
             mType=mMakeType;
             //用来判断是否是修改界面
-            boolean IsMake = bundles.getBoolean("IsMake",false);
+            IsMake = bundles.getBoolean("IsMake",false);
+            boolean IsAgain = bundles.getBoolean("IsAgain", false);
             if (IsMake) {
                 mTitle.setText(bundles.getString("TypeStr"));
                 mSubmitContentStr = bundles.getString("Number");
-            } else {
+            }else if(IsAgain){//再来一注
+                mTitle.setText(bundles.getString("TypeStr"));
+                mSubmitContentStr = bundles.getString("Number");
+            }else {
                 if(mType!=1){
                     mTitle.setText(bundles.getString("TypeStr"));
                 }else {
@@ -173,11 +200,39 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
                 finish();
             }
         });
+        //机选
+        RxBus.getDefault().doSubscribeMain(this, RxBusBean.class, new Consumer<RxBusBean>() {
+            @Override
+            public void accept(RxBusBean rxBusBean) throws Exception {
+                if(rxBusBean.getType()==RxBusType.ToShake){
+                    isShake = true;
+                    //开始震动 发出提示音 展示动画效果(延迟500ms)
+                    mHandler.sendEmptyMessageDelayed(BeginShake, 500);
+                }
+            }
+        });
         //玩法说明
         mHintTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Bundle bundle=new Bundle();
+                switch (PlayFlag){
+                    case PlayStateManger.CQSSC:
+                        bundle.putString("Url", "http://code.310liao.com/static/html/cqsscplay.html");
+                        bundle.putString("Title", "玩法说明");
+                        startActivityAndBundle(WebShowActivity.class,bundle);
+                        break;
+                    case PlayStateManger.XJSSC:
+                        bundle.putString("Url", "http://code.310liao.com/static/html/xjsscplay.html");
+                        bundle.putString("Title", "玩法说明");
+                        startActivityAndBundle(WebShowActivity.class,bundle);
+                        break;
+                    case PlayStateManger.TJSSC:
+                        bundle.putString("Url", "http://code.310liao.com/static/html/tjsscplay.html");
+                        bundle.putString("Title", "玩法说明");
+                        startActivityAndBundle(WebShowActivity.class,bundle);
+                        break;
+                }
             }
         });
         //历史开奖结果
@@ -269,8 +324,10 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
             if(mType==mMakeType) {
                 mBundle.putSerializable("Content", mSparseArray);
             }
-            mBundle.putBoolean("isModification", true);
-            mBundle.putLong("ID", bundles.getLong("ID"));
+            if(IsMake) {
+                mBundle.putBoolean("isModification", true);
+                mBundle.putLong("ID", bundles.getLong("ID"));
+            }
         }
         FragmentTransaction transaction = fManager.beginTransaction();
         hideFragment(transaction);
@@ -759,6 +816,7 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
             public void onFinish() {
                 //倒计时结束重新请求接口获取数据
                 getThisIssueData();
+                getLotteryList();
             }
         }.start();
     }
@@ -871,6 +929,41 @@ public class StarsPlayActivity extends BaseActivity implements SensorEventListen
             @Override
             public void fail(Throwable throwable) {
 
+            }
+        });
+    }
+
+    /**\
+     * 获取开奖号码
+     */
+    private void getLotteryList() {
+        BusinessDao.GetAllLottery(new OnResultListClick<LotteryBean>() {
+            @Override
+            public void success(List<LotteryBean> list) {
+                for (LotteryBean bean:list) {
+                    if(bean.getS_type()==PlayFlag) {
+                        mLotteryBean = bean;
+                        break;
+                    }
+                }
+                if(mLotteryBean!=null && mLotteryBean.getS_bill()!=null) {
+                    mLayout01.setVisibility(View.VISIBLE);
+                    String[] strs = mLotteryBean.getS_bill().split(",");
+                    if(strs.length==5) {
+                        mCircle01.setText(strs[0]);
+                        mCircle02.setText(strs[1]);
+                        mCircle03.setText(strs[2]);
+                        mCircle04.setText(strs[3]);
+                        mCircle05.setText(strs[4]);
+                    }
+                }else {
+                    mLayout01.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void fail(Throwable throwable) {
+                mLayout01.setVisibility(View.INVISIBLE);
             }
         });
     }

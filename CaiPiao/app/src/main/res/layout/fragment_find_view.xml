@@ -13,6 +13,7 @@
             android:id="@+id/Main_Find_Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:textSize="@dimen/app_title_size"
             android:textColor="@color/White"
             android:text="发现"/>
@@ -49,14 +50,14 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:src="@drawable/goto_icon"/>
-        <TextView
+        <!--<TextView
             android:id="@+id/Find_ActivityHintIcon"
             android:layout_width="8dp"
             android:layout_height="8dp"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/Find_ActivityGoTo"
             android:layout_marginRight="5dp"
-            android:background="@drawable/round_textview"/>
+            android:background="@drawable/round_textview"/>-->
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/Find_KeFuLayout"
@@ -91,13 +92,13 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:src="@drawable/goto_icon"/>
-        <TextView
+        <!--<TextView
             android:id="@+id/Find_KeFuHintIcon"
             android:layout_width="8dp"
             android:layout_height="8dp"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/Find_KeFuGoTo"
             android:layout_marginRight="5dp"
-            android:background="@drawable/round_textview"/>
+            android:background="@drawable/round_textview"/>-->
     </RelativeLayout>
 </LinearLayout>

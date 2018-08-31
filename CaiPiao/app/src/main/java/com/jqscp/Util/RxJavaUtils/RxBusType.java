@@ -6,8 +6,10 @@ package com.jqscp.Util.RxJavaUtils;
 
 public enum RxBusType {
     LostNumber_Notice,//通知遗漏号码
+    ToShake,//通知去摇一摇
     Shake_Play,//通知摇一摇选取号码
     Shake_11_5Play,//通知摇一摇选取号码
+    Shake_PK10Play,//通知摇一摇选取号码
     Shake_K3Play,//通知摇一摇选取号码
     JustLoginOut,//通知退出登录、用户信息有变化
     JustMoney,//通知金钱有变化

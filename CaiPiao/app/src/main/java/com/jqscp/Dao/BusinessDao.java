@@ -81,13 +81,32 @@ public class BusinessDao {
         });
     }
     /**
-     * 获取当前期号（天津11选5时时彩）
+     * 获取当前期号（广东11选5时时彩）
      *
      * @param resultClick
      */
     public static void GetTJ11_5CurrentIssue(final OnResultClick<CurrentIssueBean> resultClick) {
         BusinessServer mBusinessServer = RxRetrofit.getInstance().create(BusinessServer.class);
         RxHttp.sendRequest(mBusinessServer.GetTJ11_5CurrentIssue(), new Consumer<BaseHttpBean<CurrentIssueBean>>() {
+            @Override
+            public void accept(BaseHttpBean<CurrentIssueBean> currentIssueBeanBaseHttpBean) throws Exception {
+                resultClick.success(currentIssueBeanBaseHttpBean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                resultClick.fail(throwable);
+            }
+        });
+    }
+    /**
+     * 获取当前期号（江西11选5时时彩）
+     *
+     * @param resultClick
+     */
+    public static void GetJX11_5CurrentIssue(final OnResultClick<CurrentIssueBean> resultClick) {
+        BusinessServer mBusinessServer = RxRetrofit.getInstance().create(BusinessServer.class);
+        RxHttp.sendRequest(mBusinessServer.GetJX11_5CurrentIssue(), new Consumer<BaseHttpBean<CurrentIssueBean>>() {
             @Override
             public void accept(BaseHttpBean<CurrentIssueBean> currentIssueBeanBaseHttpBean) throws Exception {
                 resultClick.success(currentIssueBeanBaseHttpBean);
@@ -107,6 +126,63 @@ public class BusinessDao {
     public static void GetJSK3CurrentIssue(final OnResultClick<CurrentIssueBean> resultClick) {
         BusinessServer mBusinessServer = RxRetrofit.getInstance().create(BusinessServer.class);
         RxHttp.sendRequest(mBusinessServer.GetJSK3CurrentIssue(), new Consumer<BaseHttpBean<CurrentIssueBean>>() {
+            @Override
+            public void accept(BaseHttpBean<CurrentIssueBean> currentIssueBeanBaseHttpBean) throws Exception {
+                resultClick.success(currentIssueBeanBaseHttpBean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                resultClick.fail(throwable);
+            }
+        });
+    }
+    /**
+     * 获取当前期号（广西快3）
+     *
+     * @param resultClick
+     */
+    public static void GetGXK3CurrentIssue(final OnResultClick<CurrentIssueBean> resultClick) {
+        BusinessServer mBusinessServer = RxRetrofit.getInstance().create(BusinessServer.class);
+        RxHttp.sendRequest(mBusinessServer.GetGXK3CurrentIssue(), new Consumer<BaseHttpBean<CurrentIssueBean>>() {
+            @Override
+            public void accept(BaseHttpBean<CurrentIssueBean> currentIssueBeanBaseHttpBean) throws Exception {
+                resultClick.success(currentIssueBeanBaseHttpBean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                resultClick.fail(throwable);
+            }
+        });
+    }
+    /**
+     * 获取当前期号（安徽快3）
+     *
+     * @param resultClick
+     */
+    public static void GetAHK3CurrentIssue(final OnResultClick<CurrentIssueBean> resultClick) {
+        BusinessServer mBusinessServer = RxRetrofit.getInstance().create(BusinessServer.class);
+        RxHttp.sendRequest(mBusinessServer.GetAHK3CurrentIssue(), new Consumer<BaseHttpBean<CurrentIssueBean>>() {
+            @Override
+            public void accept(BaseHttpBean<CurrentIssueBean> currentIssueBeanBaseHttpBean) throws Exception {
+                resultClick.success(currentIssueBeanBaseHttpBean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                resultClick.fail(throwable);
+            }
+        });
+    }
+    /**
+     * 获取当前期号（PK10）
+     *
+     * @param resultClick
+     */
+    public static void GetPK10CurrentIssue(final OnResultClick<CurrentIssueBean> resultClick) {
+        BusinessServer mBusinessServer = RxRetrofit.getInstance().create(BusinessServer.class);
+        RxHttp.sendRequest(mBusinessServer.GetPK10CurrentIssue(), new Consumer<BaseHttpBean<CurrentIssueBean>>() {
             @Override
             public void accept(BaseHttpBean<CurrentIssueBean> currentIssueBeanBaseHttpBean) throws Exception {
                 resultClick.success(currentIssueBeanBaseHttpBean);
@@ -252,7 +328,7 @@ public class BusinessDao {
         });
     }
     /**
-     * 天津11选5投注接口
+     * 广东11选5投注接口
      *
      * @param resultClick 结果回调
      */
@@ -260,6 +336,26 @@ public class BusinessDao {
         RequestBody bady=RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),data);
         BusinessServer mBusinessServer = RxRetrofit.getInstance().create(BusinessServer.class);
         RxHttp.sendNoRequest(mBusinessServer.TJ11_5CurrentIssue(bady), new Consumer<BaseHttpBean>() {
+            @Override
+            public void accept(BaseHttpBean currentIssueBeanBaseHttpBean) throws Exception {
+                resultClick.success(currentIssueBeanBaseHttpBean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                resultClick.fail(throwable);
+            }
+        });
+    }
+    /**
+     * 江西11选5投注接口
+     *
+     * @param resultClick 结果回调
+     */
+    public static void JX11_5CurrentIssue(String data, final OnResultClick<BaseHttpBean> resultClick) {
+        RequestBody bady=RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),data);
+        BusinessServer mBusinessServer = RxRetrofit.getInstance().create(BusinessServer.class);
+        RxHttp.sendNoRequest(mBusinessServer.JX11_5CurrentIssue(bady), new Consumer<BaseHttpBean>() {
             @Override
             public void accept(BaseHttpBean currentIssueBeanBaseHttpBean) throws Exception {
                 resultClick.success(currentIssueBeanBaseHttpBean);
@@ -280,6 +376,66 @@ public class BusinessDao {
         RequestBody bady=RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),data);
         BusinessServer mBusinessServer = RxRetrofit.getInstance().create(BusinessServer.class);
         RxHttp.sendNoRequest(mBusinessServer.JSK3CurrentIssue(bady), new Consumer<BaseHttpBean>() {
+            @Override
+            public void accept(BaseHttpBean currentIssueBeanBaseHttpBean) throws Exception {
+                resultClick.success(currentIssueBeanBaseHttpBean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                resultClick.fail(throwable);
+            }
+        });
+    }
+    /**
+     * 广西快3投注接口
+     *
+     * @param resultClick 结果回调
+     */
+    public static void GXK3CurrentIssue(String data, final OnResultClick<BaseHttpBean> resultClick) {
+        RequestBody bady=RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),data);
+        BusinessServer mBusinessServer = RxRetrofit.getInstance().create(BusinessServer.class);
+        RxHttp.sendNoRequest(mBusinessServer.GXK3CurrentIssue(bady), new Consumer<BaseHttpBean>() {
+            @Override
+            public void accept(BaseHttpBean currentIssueBeanBaseHttpBean) throws Exception {
+                resultClick.success(currentIssueBeanBaseHttpBean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                resultClick.fail(throwable);
+            }
+        });
+    }
+    /**
+     * 安徽快3投注接口
+     *
+     * @param resultClick 结果回调
+     */
+    public static void AHK3CurrentIssue(String data, final OnResultClick<BaseHttpBean> resultClick) {
+        RequestBody bady=RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),data);
+        BusinessServer mBusinessServer = RxRetrofit.getInstance().create(BusinessServer.class);
+        RxHttp.sendNoRequest(mBusinessServer.AHK3CurrentIssue(bady), new Consumer<BaseHttpBean>() {
+            @Override
+            public void accept(BaseHttpBean currentIssueBeanBaseHttpBean) throws Exception {
+                resultClick.success(currentIssueBeanBaseHttpBean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                resultClick.fail(throwable);
+            }
+        });
+    }
+    /**
+     * pk10投注接口
+     *
+     * @param resultClick 结果回调
+     */
+    public static void PK10CurrentIssue(String data, final OnResultClick<BaseHttpBean> resultClick) {
+        RequestBody bady=RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),data);
+        BusinessServer mBusinessServer = RxRetrofit.getInstance().create(BusinessServer.class);
+        RxHttp.sendNoRequest(mBusinessServer.PK10CurrentIssue(bady), new Consumer<BaseHttpBean>() {
             @Override
             public void accept(BaseHttpBean currentIssueBeanBaseHttpBean) throws Exception {
                 resultClick.success(currentIssueBeanBaseHttpBean);
@@ -459,13 +615,51 @@ public class BusinessDao {
         });
     }
     /**
-     * 获取往期开奖号列表（天津11选5）
+     * 获取往期开奖号列表（广东11选5）
      *
      * @param resultClick
      */
     public static void GetTJ11_5BillHistory(final OnResultListClick<CQHistoryBean> resultClick) {
         BusinessServer mBusinessServer = RxRetrofit.getInstance().create(BusinessServer.class);
         RxHttp.sendRequestList(mBusinessServer.GetTJ11_5BillHistory(), new Consumer<List<CQHistoryBean>>() {
+            @Override
+            public void accept(List<CQHistoryBean> list) throws Exception {
+                resultClick.success(list);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                resultClick.fail(throwable);
+            }
+        });
+    }
+    /**
+     * 获取往期开奖号列表（江西11选5）
+     *
+     * @param resultClick
+     */
+    public static void GetJX11_5BillHistory(final OnResultListClick<CQHistoryBean> resultClick) {
+        BusinessServer mBusinessServer = RxRetrofit.getInstance().create(BusinessServer.class);
+        RxHttp.sendRequestList(mBusinessServer.GetJX11_5BillHistory(), new Consumer<List<CQHistoryBean>>() {
+            @Override
+            public void accept(List<CQHistoryBean> list) throws Exception {
+                resultClick.success(list);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                resultClick.fail(throwable);
+            }
+        });
+    }
+    /**
+     * 获取往期开奖号列表（PK10）
+     *
+     * @param resultClick
+     */
+    public static void GetPK10BillHistory(final OnResultListClick<CQHistoryBean> resultClick) {
+        BusinessServer mBusinessServer = RxRetrofit.getInstance().create(BusinessServer.class);
+        RxHttp.sendRequestList(mBusinessServer.GetPK10BillHistory(), new Consumer<List<CQHistoryBean>>() {
             @Override
             public void accept(List<CQHistoryBean> list) throws Exception {
                 resultClick.success(list);
@@ -485,6 +679,44 @@ public class BusinessDao {
     public static void GetJSK3BillHistory(final OnResultListClick<CQHistoryBean> resultClick) {
         BusinessServer mBusinessServer = RxRetrofit.getInstance().create(BusinessServer.class);
         RxHttp.sendRequestList(mBusinessServer.GetJSK3BillHistory(), new Consumer<List<CQHistoryBean>>() {
+            @Override
+            public void accept(List<CQHistoryBean> list) throws Exception {
+                resultClick.success(list);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                resultClick.fail(throwable);
+            }
+        });
+    }
+    /**
+     * 获取往期开奖号列表（广西快3）
+     *
+     * @param resultClick
+     */
+    public static void GetGXK3BillHistory(final OnResultListClick<CQHistoryBean> resultClick) {
+        BusinessServer mBusinessServer = RxRetrofit.getInstance().create(BusinessServer.class);
+        RxHttp.sendRequestList(mBusinessServer.GetGXK3BillHistory(), new Consumer<List<CQHistoryBean>>() {
+            @Override
+            public void accept(List<CQHistoryBean> list) throws Exception {
+                resultClick.success(list);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                resultClick.fail(throwable);
+            }
+        });
+    }
+    /**
+     * 获取往期开奖号列表（安徽快3）
+     *
+     * @param resultClick
+     */
+    public static void GetAHK3BillHistory(final OnResultListClick<CQHistoryBean> resultClick) {
+        BusinessServer mBusinessServer = RxRetrofit.getInstance().create(BusinessServer.class);
+        RxHttp.sendRequestList(mBusinessServer.GetAHK3BillHistory(), new Consumer<List<CQHistoryBean>>() {
             @Override
             public void accept(List<CQHistoryBean> list) throws Exception {
                 resultClick.success(list);

@@ -88,7 +88,6 @@ public class TimeUtils {
     public static String getTimestamp2ShortY(String timestamp){
         try {
             long timeStr=Long.parseLong(timestamp+"000");
-            ALog.e(""+timeStr);
             Date currentTime = new Date(timeStr);
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             return formatter.format(currentTime);
@@ -104,7 +103,6 @@ public class TimeUtils {
     public static String getTimestamp2ShortStr(String timestamp){
         try {
             long timeStr=Long.parseLong(timestamp+"000");
-            ALog.e(""+timeStr);
             Date currentTime = new Date(timeStr);
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             String[] times=formatter.format(currentTime).split("-");

@@ -42,13 +42,29 @@ public interface BusinessServer {
     @GET("api/sd11x5/v1/show")
     Flowable<BaseHttpBean<CurrentIssueBean>> GetSD11_5CurrentIssue();
 
-    //山东11选5获取当前期号
+    //广东11选5获取当前期号
     @GET("api/tj11x5/v1/show")
     Flowable<BaseHttpBean<CurrentIssueBean>> GetTJ11_5CurrentIssue();
+
+    //江西11选5获取当前期号
+    @GET("api/jx11x5/v1/show")
+    Flowable<BaseHttpBean<CurrentIssueBean>> GetJX11_5CurrentIssue();
 
     //江苏快3获取当前期号
     @GET("api/jsksan/v1/ksshow")
     Flowable<BaseHttpBean<CurrentIssueBean>> GetJSK3CurrentIssue();
+
+    //广西快3获取当前期号
+    @GET("api/gxksan/v1/ksshow")
+    Flowable<BaseHttpBean<CurrentIssueBean>> GetGXK3CurrentIssue();
+
+    //安徽快3获取当前期号
+    @GET("api/ahksan/v1/ksshow")
+    Flowable<BaseHttpBean<CurrentIssueBean>> GetAHK3CurrentIssue();
+
+    //PK10获取当前期号
+    @GET("api/pkten/v1/pkshow")
+    Flowable<BaseHttpBean<CurrentIssueBean>> GetPK10CurrentIssue();
 
     //重庆时时彩投注接口
     @POST("api/cqssc/v1/makebill")
@@ -70,13 +86,29 @@ public interface BusinessServer {
     @POST("api/sd11x5/v1/makebill")
     Flowable<BaseHttpBean> SD11_5CurrentIssue(@Body RequestBody data);
 
-    //天津11选5彩投注接口
+    //广东11选5彩投注接口
     @POST("api/tj11x5/v1/makebill")
     Flowable<BaseHttpBean> TJ11_5CurrentIssue(@Body RequestBody data);
+
+    //江西11选5彩投注接口
+    @POST("api/jx11x5/v1/makebill")
+    Flowable<BaseHttpBean> JX11_5CurrentIssue(@Body RequestBody data);
 
     //江苏快3投注接口
     @POST("api/jsksan/v1/ksten")
     Flowable<BaseHttpBean> JSK3CurrentIssue(@Body RequestBody data);
+
+    //广西快3投注接口
+    @POST("api/gxksan/v1/ksten")
+    Flowable<BaseHttpBean> GXK3CurrentIssue(@Body RequestBody data);
+
+    //安徽快3投注接口
+    @POST("api/ahksan/v1/ksten")
+    Flowable<BaseHttpBean> AHK3CurrentIssue(@Body RequestBody data);
+
+    //PK10投注接口
+    @POST("api/pkten/v1/pkten")
+    Flowable<BaseHttpBean> PK10CurrentIssue(@Body RequestBody data);
 
     //投注记录
     @GET("api/appuser/v1/makebillrecord")
@@ -104,15 +136,27 @@ public interface BusinessServer {
     //获取天津往期开奖号列表
     @GET("api/xjssc/v1/oldbills")
     Flowable<BaseHttpBean<List<CQHistoryBean>>> GetTJBillHistory();
-    //获取天津往期开奖号列表
+    //获取江苏快3往期开奖号列表
     @GET("api/jsksan/v1/oldbills")
     Flowable<BaseHttpBean<List<CQHistoryBean>>> GetJSK3BillHistory();
+    //获取广西快3往期开奖号列表
+    @GET("api/gxksan/v1/oldbills")
+    Flowable<BaseHttpBean<List<CQHistoryBean>>> GetGXK3BillHistory();
+    //获取安徽快3往期开奖号列表
+    @GET("api/ahksan/v1/oldbills")
+    Flowable<BaseHttpBean<List<CQHistoryBean>>> GetAHK3BillHistory();
     //获取山东11选5开奖号列表
     @GET("api/sd11x5/v1/oldbills")
     Flowable<BaseHttpBean<List<CQHistoryBean>>> GetSD11_5BillHistory();
     //获取天津往期开奖号列表
     @GET("api/tj11x5/v1/oldbills")
     Flowable<BaseHttpBean<List<CQHistoryBean>>> GetTJ11_5BillHistory();
+    //获取江西11选5往期开奖号列表
+    @GET("api/jx11x5/v1/oldbills")
+    Flowable<BaseHttpBean<List<CQHistoryBean>>> GetJX11_5BillHistory();
+    //获取PK10往期开奖号列表
+    @GET("api/pkten/v1/oldbills")
+    Flowable<BaseHttpBean<List<CQHistoryBean>>> GetPK10BillHistory();
 
     //16获取全部彩种开奖号
     @GET("api/appuser/v1/billcodelists")

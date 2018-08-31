@@ -93,6 +93,11 @@
         <activity
             android:name=".Activity.Orders.SD11_5_OrderActivity"
             android:launchMode="singleTask"/>
+        <activity android:name=".Activity.Plays.PK10PlayActivity"/>
+        <activity
+            android:name=".Activity.Orders.PK10_OrderActivity"
+            android:launchMode="singleTask"/>
+
         <activity android:name=".Activity.Pays.PaySuccessActivity">
         </activity>
         <activity android:name=".Activity.Lotterys.HistoryLotteryActivity">
@@ -117,6 +122,8 @@
                 android:resource="@xml/provider_paths"/>
         </provider>
 
+        <activity android:name=".Activity.Finds.EventsActivity">
+        </activity>
     </application>
 
 </manifest>

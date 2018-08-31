@@ -3,27 +3,34 @@ package com.jqscp.Fragment.Main;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.jqscp.Activity.MainActivity;
 import com.jqscp.Activity.Orders.CQ_SSC_OrderActivity;
 import com.jqscp.Activity.Orders.K3_OrderActivity;
+import com.jqscp.Activity.Orders.PK10_OrderActivity;
 import com.jqscp.Activity.Orders.SD11_5_OrderActivity;
 import com.jqscp.Activity.Plays.K3PlayActivity;
+import com.jqscp.Activity.Plays.PK10PlayActivity;
 import com.jqscp.Activity.Plays.PlayStateManger;
 import com.jqscp.Activity.Plays.SD11_5PlayActivity;
 import com.jqscp.Activity.Plays.StarsPlayActivity;
 import com.jqscp.Activity.WebShowActivity;
 import com.jqscp.Adapter.HomeGridViewAdapter;
+import com.jqscp.Bean.AppConfigBean;
+import com.jqscp.Bean.BaseHttpBean;
 import com.jqscp.Bean.BroadCastBean;
 import com.jqscp.Bean.HomePlayInfoBean;
 import com.jqscp.Bean.LunBoBean;
 import com.jqscp.Dao.InfoDao;
+import com.jqscp.Dao.OnResultClick;
 import com.jqscp.Dao.OnResultListClick;
 import com.jqscp.GreenDao.DaoUtil.HomePlayDaoUtil;
 import com.jqscp.GreenDao.DaoUtil.LunBoDaoUtil;
@@ -50,6 +57,7 @@ public class HomeFragment extends BaseFragment {
     private View mView;
     private MainActivity mMainActivity;
     private RelativeLayout mTopBarLayout;
+    private TextView mTitle;//标题
     private ImageCycleView mImageCycleView;//轮播图控件
     private LooperTextView mLooperTextView;//公告控件
     private LinearLayout mLooperTextViewlayout;//公告控件
@@ -71,6 +79,7 @@ public class HomeFragment extends BaseFragment {
         initView();
         initData();
         initListen();
+        GetAppConfig();
         getLunBo();
         getBroadCast();
         getPlayList();
@@ -82,6 +91,7 @@ public class HomeFragment extends BaseFragment {
      */
     private void initView() {
         mTopBarLayout = mView.findViewById(R.id.Main_Home_TopLayout);
+        mTitle = mView.findViewById(R.id.Main_Home_Title);
         mImageCycleView = mView.findViewById(R.id.Main_Home_ImageCycleView);
         mLooperTextView = mView.findViewById(R.id.Main_Home_LooperTextView);
         mLooperTextViewlayout = mView.findViewById(R.id.Main_Home_LooperTextViewLayout);
@@ -112,6 +122,14 @@ public class HomeFragment extends BaseFragment {
 
         mGridAdapter.setDataNotify(mPlayInfoList);
         setLunBoData();
+
+        String appName=Sharedpreferences_Utils.getInstance(_this).getString("AppName");
+        if(TextUtils.isEmpty(appName)){
+            mTitle.setText("高频彩");
+        }else {
+            mTitle.setText(appName);
+        }
+
     }
 
     /**
@@ -182,13 +200,49 @@ public class HomeFragment extends BaseFragment {
                             _this.startActivityAndBundle(SD11_5PlayActivity.class, bundle);
                         }
                         break;
+                    case PlayStateManger.JX11_5:
+                        //江西11选5
+                        bundle.putInt("PlayType",PlayStateManger.JX11_5);
+                        if (Sharedpreferences_Utils.getInstance(_this).getBoolean("isJX11_5Have")) {
+                            _this.startActivityAndBundle(SD11_5_OrderActivity.class, bundle);
+                        } else {
+                            _this.startActivityAndBundle(SD11_5PlayActivity.class, bundle);
+                        }
+                        break;
                     case PlayStateManger.SZ_K3:
-                        //快3
+                        //江苏快3
                         bundle.putInt("PlayType", PlayStateManger.SZ_K3);
                         if (Sharedpreferences_Utils.getInstance(_this).getBoolean("isSZ_K3Have")) {
                             _this.startActivityAndBundle(K3_OrderActivity.class, bundle);
                         } else {
                             _this.startActivityAndBundle(K3PlayActivity.class, bundle);
+                        }
+                        break;
+                    case PlayStateManger.GX_K3:
+                        //广西快3
+                        bundle.putInt("PlayType", PlayStateManger.GX_K3);
+                        if (Sharedpreferences_Utils.getInstance(_this).getBoolean("isGX_K3Have")) {
+                            _this.startActivityAndBundle(K3_OrderActivity.class, bundle);
+                        } else {
+                            _this.startActivityAndBundle(K3PlayActivity.class, bundle);
+                        }
+                        break;
+                    case PlayStateManger.AH_K3:
+                        //安徽快3
+                        bundle.putInt("PlayType", PlayStateManger.AH_K3);
+                        if (Sharedpreferences_Utils.getInstance(_this).getBoolean("isAH_K3Have")) {
+                            _this.startActivityAndBundle(K3_OrderActivity.class, bundle);
+                        } else {
+                            _this.startActivityAndBundle(K3PlayActivity.class, bundle);
+                        }
+                        break;
+                    case PlayStateManger.PK10:
+                        //PK10
+                        bundle.putInt("PlayType", PlayStateManger.PK10);
+                        if (Sharedpreferences_Utils.getInstance(_this).getBoolean("isCPK10Have")) {
+                            _this.startActivityAndBundle(PK10_OrderActivity.class, bundle);
+                        } else {
+                            _this.startActivityAndBundle(PK10PlayActivity.class, bundle);
                         }
                         break;
                 }
@@ -245,6 +299,7 @@ public class HomeFragment extends BaseFragment {
                     if(bean.getType()==3) {
                         Bundle bundle = new Bundle();
                         bundle.putString("Url", bean.getUrl());
+                        bundle.putString("Title", bean.getTitle());
                         _this.startActivityAndBundle(WebShowActivity.class, bundle);
                     }
                 }
@@ -378,6 +433,29 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void fail(Throwable throwable) {
                 ToastUtils.showShort(_this,"网络异常");
+            }
+        });
+    }
+
+    /**
+     * 获取AppConfig
+     */
+    private void GetAppConfig(){
+        InfoDao.GetAppConfig(new OnResultClick<AppConfigBean>() {
+            @Override
+            public void success(BaseHttpBean<AppConfigBean> bean) {
+                if(bean.getCode()==0){
+                    AppConfigBean mConfig=bean.getData();
+                    if(mConfig!=null){
+                        mTitle.setText(mConfig.getAppname());
+                        Sharedpreferences_Utils.getInstance(_this).setString("AppName",mConfig.getAppname());
+                    }
+                }
+            }
+
+            @Override
+            public void fail(Throwable throwable) {
+
             }
         });
     }

@@ -27,7 +27,7 @@ android {
 }
 /*针对greenDao的一些配置*/
 greendao {
-    schemaVersion 9 //数据库版本号
+    schemaVersion 13 //数据库版本号
     daoPackage 'com.jqscp.GreenDao' //自动生成的工具类的包名
     targetGenDir 'src/main/java' //路径
 }

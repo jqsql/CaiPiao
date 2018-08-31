@@ -15,16 +15,11 @@
             android:id="@+id/Main_Home_Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:text="高频彩"
             android:textColor="@color/White"
             android:textSize="@dimen/app_title_size"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/Main_Home_Title"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/main_gift"/>
     </RelativeLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout

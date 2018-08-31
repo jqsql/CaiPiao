@@ -87,19 +87,39 @@ public class LotteryFragment extends BaseFragment {
                         .setText(R.id.Lottery_Item_QI, cqHistoryBean.getS_time()==null ? "暂无开奖信息" : "第"+cqHistoryBean.getS_time()+"期");
                 LinearLayout layout01=holder.getView(R.id.Lottery_Item_NumberLayout);
                 LinearLayout layout02=holder.getView(R.id.Lottery_Item_Number2Layout);
+                LinearLayout layout03=holder.getView(R.id.Lottery_Item_NumberBottomLayout);
                 if(cqHistoryBean.getS_bill()!=null) {
                     String[] strs = cqHistoryBean.getS_bill().split(",");
-                    if ("江苏快3".equals(cqHistoryBean.getName())) {
+                    if (cqHistoryBean.getS_type()==PlayStateManger.SZ_K3 || cqHistoryBean.getS_type()==PlayStateManger.GX_K3
+                            || cqHistoryBean.getS_type()==PlayStateManger.AH_K3) {
                         layout02.setVisibility(View.VISIBLE);
                         layout01.setVisibility(View.GONE);
+                        layout03.setVisibility(View.GONE);
                         if(strs.length==3) {
                             holder.setImageResource(R.id.MainLottery_Item_Item_Icon01, setInitResource(strs[0]))
                                     .setImageResource(R.id.MainLottery_Item_Item_Icon02, setInitResource(strs[1]))
                                     .setImageResource(R.id.MainLottery_Item_Item_Icon03, setInitResource(strs[2]));
                         }
+                    }else if(cqHistoryBean.getS_type()==PlayStateManger.PK10){
+                        layout01.setVisibility(View.VISIBLE);
+                        layout02.setVisibility(View.GONE);
+                        layout03.setVisibility(View.VISIBLE);
+                        if(strs.length==10) {
+                            holder.setText(R.id.MainLottery_Item_Item_Number01, strs[0])
+                                    .setText(R.id.MainLottery_Item_Item_Number02, strs[1])
+                                    .setText(R.id.MainLottery_Item_Item_Number03, strs[2])
+                                    .setText(R.id.MainLottery_Item_Item_Number04, strs[3])
+                                    .setText(R.id.MainLottery_Item_Item_Number05, strs[4])
+                                    .setText(R.id.MainLottery_Item_Item_Number06, strs[5])
+                                    .setText(R.id.MainLottery_Item_Item_Number07, strs[6])
+                                    .setText(R.id.MainLottery_Item_Item_Number08, strs[7])
+                                    .setText(R.id.MainLottery_Item_Item_Number09, strs[8])
+                                    .setText(R.id.MainLottery_Item_Item_Number10, strs[9]);
+                        }
                     }else {
                         layout01.setVisibility(View.VISIBLE);
                         layout02.setVisibility(View.GONE);
+                        layout03.setVisibility(View.GONE);
                         if(strs.length==5) {
                             holder.setText(R.id.MainLottery_Item_Item_Number01, strs[0])
                                     .setText(R.id.MainLottery_Item_Item_Number02, strs[1])
@@ -111,6 +131,7 @@ public class LotteryFragment extends BaseFragment {
                 }else {
                     layout01.setVisibility(View.GONE);
                     layout02.setVisibility(View.GONE);
+                    layout03.setVisibility(View.GONE);
                 }
             }
         };
@@ -128,28 +149,8 @@ public class LotteryFragment extends BaseFragment {
             @Override
             public void onClick(BaseViewHolder holder, LotteryBean cqHistoryBean, int position) {
                 Bundle bundle = new Bundle();
-                switch (cqHistoryBean.getName()) {
-                    case "重庆时时彩":
-                        bundle.putInt("DataType", PlayStateManger.CQSSC);
-                        break;
-                    case "新疆时时彩":
-                        bundle.putInt("DataType", PlayStateManger.XJSSC);
-                        break;
-                    case "天津时时彩":
-                        bundle.putInt("DataType", PlayStateManger.TJSSC);
-                        break;
-                    case "山东11选5":
-                        bundle.putInt("DataType", PlayStateManger.SD11_5);
-                        break;
-                    case "天津11选5":
-                        bundle.putInt("DataType", PlayStateManger.TJ11_5);
-                        break;
-                    case "江苏快3":
-                        bundle.putInt("DataType", PlayStateManger.SZ_K3);
-                        break;
-                    default:
-                        break;
-                }
+                bundle.putInt("DataType", cqHistoryBean.getS_type());
+                bundle.putString("DataTypeName", cqHistoryBean.getName());
                 _this.startActivityAndBundle(HistoryLotteryActivity.class, bundle);
             }
         });

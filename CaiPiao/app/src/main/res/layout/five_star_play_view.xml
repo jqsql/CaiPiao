@@ -103,6 +103,7 @@
                 android:layout_marginTop="20dp">
 
                 <TextView
+                    android:id="@+id/GridView_Hint01"
                     style="@style/Text_ww_Commmon_Black"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/play_number_bg"
@@ -128,6 +129,7 @@
                 android:layout_marginTop="20dp">
 
                 <TextView
+                    android:id="@+id/GridView_Hint02"
                     style="@style/Text_ww_Commmon_Black"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/play_number_bg"
@@ -153,6 +155,7 @@
                 android:layout_marginTop="20dp">
 
                 <TextView
+                    android:id="@+id/GridView_Hint03"
                     style="@style/Text_ww_Commmon_Black"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/play_number_bg"
@@ -178,6 +181,7 @@
                 android:layout_marginTop="20dp">
 
                 <TextView
+                    android:id="@+id/GridView_Hint04"
                     style="@style/Text_ww_Commmon_Black"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/play_number_bg"
@@ -203,6 +207,7 @@
                 android:layout_marginTop="20dp">
 
                 <TextView
+                    android:id="@+id/GridView_Hint05"
                     style="@style/Text_ww_Commmon_Black"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/play_number_bg"
